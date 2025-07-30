@@ -152,132 +152,363 @@
 //   );
 // }
 
+// import React, { useEffect, useRef } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useQuizProgress } from "../../hooks/useQuizProgress";
+// import { gsap } from "gsap";
+// import { Trophy, RotateCcw, Home } from "lucide-react";
+
+// export default function QuizComplete() {
+//   const navigate = useNavigate();
+//   const quizData = useQuizProgress();
+//   const containerRef = useRef(null);
+
+//   // ✅ Correct access from quizState
+//   const score = quizData.quizState.score || 0;
+//   const totalQuestions = quizData.quizState.totalQuestions || 0;
+//   const scorePercentage =
+//     totalQuestions > 0 ? (score / totalQuestions) * 100 : 0;
+
+//   console.log("QuizComplete Data:", {
+//     score,
+//     totalQuestions,
+//     scorePercentage,
+//     rawState: quizData
+//   });
+
+//   useEffect(() => {
+//     if (!containerRef.current) return;
+
+//     gsap.fromTo(
+//       containerRef.current,
+//       { opacity: 0, y: 50 },
+//       { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+//     );
+//   }, []);
+
+//   const getScoreMessage = () => {
+//     if (scorePercentage >= 90) return "Outstanding! You're a quiz master!";
+//     if (scorePercentage >= 80) return "Excellent work! Keep it up!";
+//     if (scorePercentage >= 70) return "Good job! You're getting there!";
+//     if (scorePercentage >= 60) return "Not bad! Room for improvement!";
+//     return "Keep practicing! You'll get better!";
+//   };
+
+//   const getScoreColor = () => {
+//     if (scorePercentage >= 80) return "text-green-400";
+//     if (scorePercentage >= 60) return "text-yellow-400";
+//     return "text-red-400";
+//   };
+
+//   const handleRetryQuiz = () => {
+//     quizData.resetQuiz();
+//   };
+
+//   const handleBackToSelection = () => {
+//     navigate("/quiz-selection");
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+//       <div ref={containerRef} className="max-w-2xl w-full text-center">
+//         {/* Debug info */}
+//         <div className="mb-4 text-gray-400 text-sm border border-gray-600 p-2 rounded">
+//           Debug: Score {score}/{totalQuestions} = {Math.round(scorePercentage)}%
+//         </div>
+
+//         {/* Title */}
+//         <div className="mb-8">
+//           <Trophy className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
+//           <h1 className="text-4xl font-bold text-white mb-4">
+//             Quest Complete!
+//           </h1>
+//           <p className="text-xl text-gray-300 mb-8">{getScoreMessage()}</p>
+//         </div>
+
+//         {/* Score display */}
+//         <div className="bg-gray-800 p-8 rounded-lg mb-8 border border-gray-600">
+//           <div className="flex items-center justify-center gap-8 mb-6">
+//             <div className="text-center">
+//               <div className="text-4xl font-bold text-white mb-2">{score}</div>
+//               <div className="text-gray-400">Correct</div>
+//             </div>
+//             <div className="text-4xl text-gray-400">/</div>
+//             <div className="text-center">
+//               <div className="text-4xl font-bold text-white mb-2">
+//                 {totalQuestions}
+//               </div>
+//               <div className="text-gray-400">Total</div>
+//             </div>
+//           </div>
+
+//           <div className={`text-5xl font-bold ${getScoreColor()} mb-6`}>
+//             {Math.round(scorePercentage)}%
+//           </div>
+
+//           {/* Progress bar */}
+//           <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+//             <div
+//               className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-1000"
+//               style={{ width: `${scorePercentage}%` }}
+//             />
+//           </div>
+//         </div>
+
+//         {/* Action buttons */}
+//         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+//           <button
+//             onClick={handleRetryQuiz}
+//             className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700
+//                      text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+//           >
+//             <RotateCcw className="w-5 h-5" />
+//             Try Again
+//           </button>
+
+//           <button
+//             onClick={handleBackToSelection}
+//             className="flex items-center justify-center gap-3 bg-gray-600 hover:bg-gray-700
+//                      text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+//           >
+//             <Home className="w-5 h-5" />
+//             Back to Menu
+//           </button>
+//         </div>
+
+//         {/* Test content to ensure rendering */}
+//         <div className="mt-8 text-gray-400 text-sm">
+//           If you can see this text, the component is rendering correctly.
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// import React, { useEffect, useRef } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useQuizProgress } from "../../hooks/useQuizProgress";
+// import { gsap } from "gsap";
+// import { ArrowRight } from "lucide-react";
+// import {
+//   broken_heart,
+//   // right_hand,
+//   // victory_hand,
+//   // crown,
+//   start_quiz
+// } from "../../assets/images/avatar/index";
+
+// export default function QuizComplete() {
+//   const navigate = useNavigate();
+//   const quizData = useQuizProgress();
+//   const containerRef = useRef(null);
+
+//   const score = quizData.quizState.score || 0;
+//   const totalQuestions = quizData.quizState.totalQuestions || 0;
+
+//   useEffect(() => {
+//     gsap.fromTo(
+//       containerRef.current,
+//       { opacity: 0, y: 50 },
+//       { opacity: 1, y: 0, duration: 1 }
+//     );
+//   }, []);
+
+//   // ✅ Dynamic image selection based on score
+//   const getScoreImage = () => {
+//     if (score <= 5) return broken_heart;
+//     if (score >= 6 && score <= 7) return broken_heart;
+//     // return crown;
+//   };
+
+//   const handleRetry = () => quizData.resetQuiz();
+
+//   return (
+//     <div className="min-h-screen bg-black p-5 flex flex-col gap-5">
+//       <div ref={containerRef} className="w-full flex flex-col gap-5">
+//         {/* ✅ First Card */}
+//         <div className="rounded-2xl bg-[#C2FD5C] min-h-[420px] bg-section p-8 flex flex-col items-center justify-center text-center space-y-8">
+//           <h2 className="text-black text-4xl sm:text-5xl font-bold">
+//             your score
+//           </h2>
+
+//           {/* ✅ Score with Left & Right Images */}
+//           <div className="flex items-center justify-center gap-12">
+//             <img src={getScoreImage()} alt="score-left" className="w-16" />
+//             <p className="text-black text-6xl font-extrabold">
+//               {score}/{totalQuestions}
+//             </p>
+//             <img
+//               src={getScoreImage()}
+//               alt="score-right"
+//               className="w-16 rotate-180"
+//             />
+//           </div>
+
+//           <p className="text-black text-xl max-w-lg">
+//             🎉 You’ve Reached the Finish Line! <br />
+//             Thanks for your efforts, but we needed more of your skills.
+//           </p>
+
+//           <button
+//             onClick={handleRetry}
+//             className="flex items-center justify-center gap-2 border-2 border-black text-black px-8 py-3 rounded-lg font-semibold text-lg hover:bg-black hover:text-white transition-all"
+//           >
+//             Try Again <ArrowRight className="w-5 h-5" />
+//           </button>
+//         </div>
+
+//         {/* ✅ Second Card */}
+//         <div className="relative rounded-2xl bg-[#A35BFB] bg-courses-grid min-h-[250px] p-6 flex items-center justify-center">
+//           <h1 className="text-white text-[80px] sm:text-[100px] font-extrabold leading-[0.9] text-center">
+//             print it <br /> right!
+//           </h1>
+
+//           {/* ✅ Start Quiz Image Button */}
+//           <div
+//             onClick={() => navigate("/quiz-selection")}
+//             className="absolute top-1/2 right-6 transform -translate-y-1/2 cursor-pointer group"
+//           >
+//             {/* Image container rotates on hover */}
+//             <div className="relative w-[120px] h-[120px] transition-transform duration-300 group-hover:rotate-90">
+//               <img
+//                 src={start_quiz}
+//                 alt="start quiz"
+//                 className="absolute inset-0 w-full h-full object-contain"
+//               />
+//               {/* Static Text on top */}
+//               <p className="absolute inset-0 flex items-center justify-center text-black font-extrabold text-xl select-none">
+//                 start quiz
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuizProgress } from "../../hooks/useQuizProgress";
 import { gsap } from "gsap";
-import { Trophy, RotateCcw, Home } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import {
+  broken_heart,
+  left_finger,
+  right_finger,
+  left_hand,
+  right_hand,
+  start_quiz,
+  mystery_box,
+  objects,
+  thunder_1,
+  thunder_2
+} from "../../assets/images/avatar/index";
 
 export default function QuizComplete() {
   const navigate = useNavigate();
   const quizData = useQuizProgress();
   const containerRef = useRef(null);
 
-  // ✅ Correct access from quizState
   const score = quizData.quizState.score || 0;
   const totalQuestions = quizData.quizState.totalQuestions || 0;
-  const scorePercentage =
-    totalQuestions > 0 ? (score / totalQuestions) * 100 : 0;
-
-  console.log("QuizComplete Data:", {
-    score,
-    totalQuestions,
-    scorePercentage,
-    rawState: quizData
-  });
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
     gsap.fromTo(
       containerRef.current,
       { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      { opacity: 1, y: 0, duration: 1 }
     );
   }, []);
 
-  const getScoreMessage = () => {
-    if (scorePercentage >= 90) return "Outstanding! You're a quiz master!";
-    if (scorePercentage >= 80) return "Excellent work! Keep it up!";
-    if (scorePercentage >= 70) return "Good job! You're getting there!";
-    if (scorePercentage >= 60) return "Not bad! Room for improvement!";
-    return "Keep practicing! You'll get better!";
+  // ✅ Select images based on score
+  const getScoreImages = () => {
+    if (score <= 5) return { left: broken_heart, right: broken_heart };
+    if (score >= 6 && score <= 7)
+      return { left: left_finger, right: right_finger };
+    return { left: left_hand, right: right_hand };
   };
 
-  const getScoreColor = () => {
-    if (scorePercentage >= 80) return "text-green-400";
-    if (scorePercentage >= 60) return "text-yellow-400";
-    return "text-red-400";
-  };
-
-  const handleRetryQuiz = () => {
-    quizData.resetQuiz();
-  };
-
-  const handleBackToSelection = () => {
-    navigate("/quiz-selection");
-  };
+  const { left, right } = getScoreImages();
+  const handleRetry = () => quizData.resetQuiz();
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
-      <div ref={containerRef} className="max-w-2xl w-full text-center">
-        {/* Debug info */}
-        <div className="mb-4 text-gray-400 text-sm border border-gray-600 p-2 rounded">
-          Debug: Score {score}/{totalQuestions} = {Math.round(scorePercentage)}%
+    <div className="min-h-screen bg-black p-5 flex flex-col gap-5">
+      <div ref={containerRef} className="w-full flex flex-col gap-5">
+        {/* ✅ First Card */}
+        <div className="rounded-2xl bg-[#C2FD5C] min-h-[420px] bg-section p-8 flex flex-col items-center justify-center text-center space-y-8">
+          <h2 className="text-black text-4xl sm:text-5xl font-bold">
+            your score!
+          </h2>
+
+          {/* ✅ Bigger Score Images (Mobile → Desktop) */}
+          <div className="flex items-center justify-center gap-12">
+            <img src={left} alt="score-left" className="w-24 sm:w-[10rem]" />
+            <p className="text-black text-6xl sm:text-7xl lg:text-8xl font-extrabold">
+              {score}/{totalQuestions}
+            </p>
+            <img src={right} alt="score-right" className="w-24 sm:w-[10rem]" />
+          </div>
+
+          <p className="text-black text-xl max-w-lg leading-snug">
+            🎉 You’ve Reached the Finish Line! <br />
+            Thanks for your efforts, but we needed more of your skills.
+          </p>
+
+          <button
+            onClick={handleRetry}
+            className="flex items-center justify-center gap-2 border-2 border-black text-black px-8 py-3 rounded-lg font-semibold text-lg hover:bg-black hover:text-white transition-all"
+          >
+            Try Again <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* Title */}
-        <div className="mb-8">
-          <Trophy className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Quest Complete!
+        {/* ✅ Second Card with Reduced Padding */}
+        <div className="relative rounded-2xl bg-[#A35BFB] bg-courses-grid min-h-[250px] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+          {/* ✅ Title with Tighter Line */}
+          <h1 className="text-white text-[70px] sm:text-[100px] font-extrabold leading-[0.8] text-center z-10">
+            print it <br /> right!
           </h1>
-          <p className="text-xl text-gray-300 mb-8">{getScoreMessage()}</p>
-        </div>
 
-        {/* Score display */}
-        <div className="bg-gray-800 p-8 rounded-lg mb-8 border border-gray-600">
-          <div className="flex items-center justify-center gap-8 mb-6">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">{score}</div>
-              <div className="text-gray-400">Correct</div>
-            </div>
-            <div className="text-4xl text-gray-400">/</div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">
-                {totalQuestions}
-              </div>
-              <div className="text-gray-400">Total</div>
-            </div>
-          </div>
-
-          <div className={`text-5xl font-bold ${getScoreColor()} mb-6`}>
-            {Math.round(scorePercentage)}%
-          </div>
-
-          {/* Progress bar */}
-          <div className="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-1000"
-              style={{ width: `${scorePercentage}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={handleRetryQuiz}
-            className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 
-                     text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+          {/* ✅ Start Quiz Image Button (Responsive) */}
+          <div
+            onClick={() => navigate("/quiz-selection")}
+            className="absolute top-[70%] sm:top-[50%] right-4 sm:right-[20rem] transform -translate-y-1/2 cursor-pointer group z-20"
           >
-            <RotateCcw className="w-5 h-5" />
-            Try Again
-          </button>
+            <div className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]">
+              <img
+                src={start_quiz}
+                alt="start quiz"
+                className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 group-hover:rotate-90 shadow-black "
+              />
+              <p className="absolute inset-0 flex items-center justify-center leading-12 text-black font-extrabold text-lg sm:text-2xl">
+                start <br />
+                quiz
+              </p>
+            </div>
+          </div>
 
-          <button
-            onClick={handleBackToSelection}
-            className="flex items-center justify-center gap-3 bg-gray-600 hover:bg-gray-700 
-                     text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            <Home className="w-5 h-5" />
-            Back to Menu
-          </button>
-        </div>
-
-        {/* Test content to ensure rendering */}
-        <div className="mt-8 text-gray-400 text-sm">
-          If you can see this text, the component is rendering correctly.
+          {/* ✅ Bigger Decorative Images */}
+          <img
+            src={mystery_box}
+            className="absolute top-4 left-4 w-[8rem] sm:w-[10rem] opacity-90"
+            alt=""
+          />
+          <img
+            src={objects}
+            className="absolute bottom-0 left-[10rem] w-[6rem] sm:w-[25rem] opacity-90"
+            alt=""
+          />
+          <img
+            src={thunder_1}
+            className="absolute top-6 left-[32rem] w-12 sm:w-16 opacity-90"
+            alt=""
+          />
+          <img
+            src={thunder_2}
+            className="absolute bottom-4 left-[60rem] w-20 sm:w-18 opacity-90"
+            alt=""
+          />
         </div>
       </div>
     </div>

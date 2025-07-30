@@ -2,6 +2,9 @@ import boy_with_tablet from "./boy-with-tablet.svg";
 import eye_and_spring from "./eye_and_spring.svg";
 import avatar_intro from "./avatar_intro.svg";
 import right_hand from "./right_hand.svg";
+import left_hand from "./left_hand.svg";
+import right_finger from "./right_finger.svg";
+import left_finger from "./left_finger.svg";
 import broken_heart from "./broken_heart.svg";
 import WebinarCard_Mobile from "./WebinarCard_Mobile.svg";
 import WebinarCard_Desktop from "./WebinarCard_Desktop.svg";
@@ -80,6 +83,14 @@ import story_scene_25 from "./story_scene_25.svg";
 import evolveLogo from "./evolve_logo.svg";
 import discordLogo from "./discord_logo.svg";
 import eyeAndSpring from "./eye_and_spring.svg";
+import start_quiz from "./start_quiz.svg";
+// import mystery_box from "./mystry_box.svg";
+import mystery_box from "./mystery_box.svg"; // Ensure this file exists in the same directory
+import objects from "./objects.svg";
+import thunder_1 from "./thunder_1.svg";
+import thunder_2 from "./thunder_2.svg";
+import eye from "./eye.svg";
+import search from "./search.svg";
 
 export {
   boy_with_tablet,
@@ -163,5 +174,16 @@ export {
   story_scene_25_mobile,
   evolveLogo,
   discordLogo,
-  eyeAndSpring
+  eyeAndSpring,
+  start_quiz,
+  left_hand,
+  left_finger,
+  right_finger,
+  // mystery_box,
+  mystery_box,
+  objects,
+  thunder_1,
+  thunder_2,
+  eye,
+  search
 };

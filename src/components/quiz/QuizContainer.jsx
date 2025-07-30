@@ -448,6 +448,13 @@ import Module17 from "./modules/Module17";
 gsap.registerPlugin(ScrollTrigger);
 
 function QuizContent() {
+  // ✅ Temporary toggle to test score screen
+  // const DEV_SHOW_SCORE = true; // set to false when done testing
+
+  // if (DEV_SHOW_SCORE) {
+  //   return <QuizComplete />;
+  // }
+
   const quiz = useQuizProgress();
   const { setLenisInstance } = useQuiz(); // You can remove this line later if unused
 

@@ -1,0 +1,45 @@
+.wavy-button {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  background: #0891b2; /* cyan-600 */
+  border-radius: 50%;
+  color: black;
+  font-weight: 800;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  animation: wavePulse 3s infinite ease-in-out;
+}
+
+.wavy-button:hover {
+  transform: rotate(10deg) scale(1.05);
+}
+
+/* ✅ Wavy edge effect */
+.wavy-button::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 45%;
+  animation: waveMorph 6s infinite linear;
+}
+
+@keyframes waveMorph {
+  0% { border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+  50% { border-radius: 55% 45% 50% 50% / 50% 45% 55% 50%; }
+  100% { border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+}
+
+@keyframes wavePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}

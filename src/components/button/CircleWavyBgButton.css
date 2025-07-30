@@ -1,0 +1,40 @@
+/* Mobile view (phones) */
+@media (max-width: 767px) {
+    .circle-button {
+      min-width: 2rem; /* 48px - smaller for mobile */
+      min-height: 2rem;
+      padding: 0.2rem; /* Reduced padding */
+    }
+  
+    .circle-button-text {
+      font-size: 0.4rem; /* 10px - much smaller font for mobile */
+      font-weight: 600; /* Slightly reduced weight for better mobile readability */
+    }
+}
+
+/* Tablet view */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .circle-button {
+      min-width: 4.75rem; /* Reduced size for tablet */
+      min-height: 4.75rem;
+      padding: 0.5rem;
+    }
+  
+    .circle-button-text {
+      font-size: 0.5rem; /* Smaller font size for better readability */
+    }
+}
+
+/* Optional: Extra small mobile devices */
+@media (max-width: 479px) {
+    .circle-button {
+      min-width: 2.5rem; /* 40px - even smaller for very small screens */
+      min-height: 2.5rem;
+      padding: 0.125rem;
+    }
+  
+    .circle-button-text {
+      font-size: 0.5rem; /* 8px - tiny but still readable */
+      font-weight: 500;
+    }
+}

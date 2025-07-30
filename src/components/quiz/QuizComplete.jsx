@@ -472,7 +472,12 @@ export default function QuizComplete() {
 
           {/* ✅ Start Quiz Image Button (Responsive) */}
           <div
-            onClick={() => navigate("/quiz-selection")}
+            onClick={() =>
+              window.open(
+                "https://evolve-printing-challange.vercel.app/",
+                "_blank"
+              )
+            }
             className="absolute top-[70%] sm:top-[50%] right-4 sm:right-[20rem] transform -translate-y-1/2 cursor-pointer group z-20"
           >
             <div className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]">

@@ -960,7 +960,7 @@ const Module3 = () => {
       x: 0,
       y: 0,
       scale: isMobile ? 0.9 : 1, // bigger for mobile
-      bottom: isMobile ? "10px" : "-4px",
+      bottom: isMobile ? "50px" : "-4px",
       left: isMobile ? "5%" : "2.5rem"
     });
 
@@ -1042,9 +1042,7 @@ const Module3 = () => {
         <img
           src={isMobile ? story_scene_7_mobile : story_scene_7}
           alt="Scene 7"
-          className={`w-full ${
-            isMobile ? "scale-y-[80%]" : "scale-y-[70%]"
-          } object-contain`}
+          className={`w-full ${isMobile ? "" : "scale-y-[70%]"} object-contain`}
         />
         <img
           ref={charRef}
@@ -1056,7 +1054,7 @@ const Module3 = () => {
         />
         <div
           ref={scene7TextRef}
-          className={`absolute bottom-6 left-6 z-40 opacity-0 ${
+          className={`absolute bottom-6 left-5 z-40 opacity-0 ${
             isMobile ? "text-sm p-2" : ""
           }`}
         >

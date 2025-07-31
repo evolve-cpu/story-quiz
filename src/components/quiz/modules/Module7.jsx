@@ -361,7 +361,7 @@ const Module7 = () => {
         {/* Scene 12 Explanation Box */}
         <div
           ref={scene12TextRef}
-          className={`absolute bottom-6 left-6 z-20 opacity-0 bg-black/80 text-white rounded-md max-w-[80%] ${
+          className={`absolute bottom-10 left-20 z-40 opacity-0 pointer-events-none bg-black/80 text-white rounded-md max-w-[80%] ${
             isMobile ? "text-xs p-2" : "text-base p-4"
           }`}
         >

@@ -149,7 +149,7 @@ const Module11 = () => {
           isMobile ? "text-xs max-w-[80%]" : "text-base max-w-[40%]"
         }`}
       >
-        <p>Scene 17 explanation text goes here.</p>
+        <p>gibbo walks towards the emergency room</p>
       </div>
 
       {/* Scene 18 */}
@@ -166,7 +166,7 @@ const Module11 = () => {
           isMobile ? "text-xs max-w-[80%]" : "text-base max-w-[40%]"
         }`}
       >
-        <p>Scene 18 explanation text goes here.</p>
+        <p>gibbo observes how greta treats tilly</p>
       </div>
 
       {/* Scene 19 */}

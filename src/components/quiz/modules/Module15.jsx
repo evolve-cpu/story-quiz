@@ -308,7 +308,7 @@ const Module15 = () => {
             : "bottom-6 left-[7rem] text-base max-w-[35%]"
         } ml-14`}
       >
-        <p>Scene 23 initial explanation text.</p>
+        <p>tilly walks towards gibbo</p>
       </div>
 
       {/* Scene 23 Final Text */}
@@ -321,7 +321,7 @@ const Module15 = () => {
             : "bottom-6 left-[2rem] text-base max-w-[35%]"
         } `}
       >
-        <p>Scene 23 final explanation.</p>
+        <p>they both heads to the reception</p>
       </div>
 
       {/* Scene 24 */}

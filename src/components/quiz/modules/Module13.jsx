@@ -115,7 +115,7 @@ const Module13 = () => {
           isMobile ? "text-xs max-w-[80%]" : "text-base max-w-[40%]"
         }`}
       >
-        <p>Scene 21 explanation text goes here.</p>
+        <p>bored gibbo scrolls through his phone</p>
       </div>
 
       {/* Scene 22 */}

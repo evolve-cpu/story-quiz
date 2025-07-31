@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Module17 = () => {
   const containerRef = useRef(null);
   const scene25Ref = useRef(null);
+  const scene25TextBoxRef = useRef(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -71,6 +72,15 @@ const Module17 = () => {
         alt="Final Scene"
         className="absolute top-0 left-0 w-full h-full object-cover opacity-0"
       />
+
+      <div
+        ref={scene25TextBoxRef}
+        className={`absolute left-6 bottom-6 bg-black/80 text-white rounded-md p-3 z-40 opacity-0 ${
+          isMobile ? "text-xs max-w-[80%]" : "text-base max-w-[40%]"
+        }`}
+      >
+        <p>gibbo and and tilly wave goodbye to each other</p>
+      </div>
     </div>
   );
 };

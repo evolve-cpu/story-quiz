@@ -917,6 +917,267 @@
 //   return context;
 // }
 
+// import React, {
+//   createContext,
+//   useContext,
+//   useReducer,
+//   useCallback,
+//   useEffect,
+//   useRef
+// } from "react";
+
+// const QuizContext = createContext();
+
+// const QUIZ_ACTIONS = {
+//   SET_CURRENT_MODULE: "SET_CURRENT_MODULE",
+//   SET_CURRENT_SCENE: "SET_CURRENT_SCENE",
+//   SUBMIT_RESPONSE: "SUBMIT_RESPONSE",
+//   UPDATE_SCORE: "UPDATE_SCORE",
+//   RESET_QUIZ: "RESET_QUIZ",
+//   SET_QUIZ_COMPLETE: "SET_QUIZ_COMPLETE",
+//   SET_LOADING: "SET_LOADING",
+//   SET_QUIZ_ACTIVE: "SET_QUIZ_ACTIVE"
+// };
+
+// const initialQuizState = {
+//   currentModule: 1,
+//   currentScene: 1,
+//   responses: {},
+//   score: 0,
+//   totalQuestions: 0,
+//   totalModules: 15, // ✅ added for dynamic progress
+//   isComplete: false,
+//   isLoading: false,
+//   startTime: new Date(),
+//   endTime: null,
+//   quizActive: false
+// };
+
+// function quizReducer(state, action) {
+//   switch (action.type) {
+//     case QUIZ_ACTIONS.SET_CURRENT_MODULE:
+//       if (state.isComplete) return state; // ✅ Prevent navigation after complete
+//       return {
+//         ...state,
+//         currentModule: action.payload,
+//         currentScene: 1
+//       };
+
+//     case "LOAD_STATE":
+//       return {
+//         ...state,
+//         ...action.payload
+//       };
+
+//     case QUIZ_ACTIONS.SET_CURRENT_SCENE:
+//       if (state.isComplete) return state; // ✅ Prevent scene change after complete
+//       return {
+//         ...state,
+//         currentScene: action.payload
+//       };
+
+//     case QUIZ_ACTIONS.SUBMIT_RESPONSE: {
+//       const { questionId, response, isCorrect, correctAnswer } = action.payload;
+
+//       const isNewQuestion = !state.responses.hasOwnProperty(questionId);
+//       const previousResponse = state.responses[questionId];
+//       const wasCorrectBefore = previousResponse?.isCorrect ?? false;
+
+//       console.log("🎯 Reducer SUBMIT_RESPONSE:", {
+//         questionId,
+//         response,
+//         isCorrect,
+//         isNewQuestion,
+//         wasCorrectBefore,
+//         currentScore: state.score,
+//         currentTotal: state.totalQuestions
+//       });
+
+//       return {
+//         ...state,
+//         responses: {
+//           ...state.responses,
+//           [questionId]: {
+//             response,
+//             isCorrect
+//           }
+//         },
+//         score: (() => {
+//           if (isNewQuestion && isCorrect) return state.score + 1;
+//           if (!isNewQuestion && !wasCorrectBefore && isCorrect)
+//             return state.score + 1;
+//           if (!isNewQuestion && wasCorrectBefore && !isCorrect)
+//             return state.score - 1;
+//           return state.score;
+//         })(),
+//         totalQuestions: isNewQuestion
+//           ? state.totalQuestions + 1
+//           : state.totalQuestions
+//       };
+//     }
+
+//     case QUIZ_ACTIONS.UPDATE_SCORE:
+//       return {
+//         ...state,
+//         score: action.payload
+//       };
+
+//     case QUIZ_ACTIONS.SET_QUIZ_COMPLETE:
+//       console.log("✅ Reducer: Marking quiz as complete");
+//       return {
+//         ...state,
+//         isComplete: true,
+//         endTime: new Date()
+//       };
+
+//     case QUIZ_ACTIONS.SET_LOADING:
+//       return {
+//         ...state,
+//         isLoading: action.payload
+//       };
+
+//     case QUIZ_ACTIONS.RESET_QUIZ:
+//       return {
+//         ...initialQuizState,
+//         startTime: new Date()
+//       };
+
+//     case QUIZ_ACTIONS.SET_QUIZ_ACTIVE:
+//       return {
+//         ...state,
+//         quizActive: action.payload
+//       };
+
+//     default:
+//       return state;
+//   }
+// }
+
+// export function QuizProvider({ children }) {
+//   const [quizState, dispatch] = useReducer(quizReducer, initialQuizState);
+//   const scrollPositionRef = useRef({ x: 0, y: 0 });
+//   const lenisInstanceRef = useRef(null);
+
+//   // Store reference to Lenis instance
+//   const setLenisInstance = useCallback((instance) => {
+//     lenisInstanceRef.current = instance;
+//   }, []);
+
+//   // Load state from localStorage on mount with backward compatibility
+//   useEffect(() => {
+//     const stored = localStorage.getItem("quizState");
+//     if (stored) {
+//       try {
+//         const parsedState = { ...initialQuizState, ...JSON.parse(stored) }; // ✅ merge defaults
+//         dispatch({ type: "LOAD_STATE", payload: parsedState });
+//       } catch (error) {
+//         console.error("Failed to parse stored quiz state:", error);
+//       }
+//     }
+//   }, []);
+
+//   // Debounced localStorage save
+//   useEffect(() => {
+//     const timeoutId = setTimeout(() => {
+//       localStorage.setItem("quizState", JSON.stringify(quizState));
+//     }, 500);
+//     return () => clearTimeout(timeoutId);
+//   }, [quizState]);
+
+//   const preserveScrollPosition = useCallback(() => {
+//     scrollPositionRef.current = {
+//       x: window.scrollX,
+//       y: window.scrollY
+//     };
+//   }, []);
+
+//   const restoreScrollPosition = useCallback(() => {
+//     const { x, y } = scrollPositionRef.current;
+//     requestAnimationFrame(() => {
+//       window.scrollTo(x, y);
+//       if (lenisInstanceRef.current) {
+//         lenisInstanceRef.current.scrollTo(y, { immediate: true });
+//       }
+//       requestAnimationFrame(() => {
+//         if (window.scrollX !== x || window.scrollY !== y) {
+//           window.scrollTo(x, y);
+//         }
+//       });
+//     });
+//   }, []);
+
+//   const submitResponse = useCallback(
+//     async ({ questionId, response, correctAnswer }) => {
+//       preserveScrollPosition();
+
+//       // ✅ Multi-answer safe check
+//       const isCorrect = Array.isArray(correctAnswer)
+//         ? Array.isArray(response) &&
+//           response.length === correctAnswer.length &&
+//           response.every((ans) => correctAnswer.includes(ans))
+//         : response === correctAnswer;
+
+//       console.log("📝 Context submitResponse:", {
+//         questionId,
+//         response,
+//         correctAnswer,
+//         isCorrect,
+//         currentScore: quizState.score,
+//         currentTotal: quizState.totalQuestions
+//       });
+
+//       dispatch({
+//         type: QUIZ_ACTIONS.SUBMIT_RESPONSE,
+//         payload: { questionId, response, isCorrect, correctAnswer }
+//       });
+
+//       setTimeout(restoreScrollPosition, 50);
+
+//       return isCorrect;
+//     },
+//     [
+//       preserveScrollPosition,
+//       restoreScrollPosition,
+//       quizState.score,
+//       quizState.totalQuestions
+//     ]
+//   );
+
+//   const freezeScroll = useCallback(() => {
+//     preserveScrollPosition();
+//     document.documentElement.classList.add("quiz-active");
+//     document.body.classList.add("quiz-active");
+//   }, [preserveScrollPosition]);
+
+//   const resumeScroll = useCallback(() => {
+//     document.documentElement.classList.remove("quiz-active");
+//     document.body.classList.remove("quiz-active");
+//     setTimeout(restoreScrollPosition, 50);
+//   }, [restoreScrollPosition]);
+
+//   const value = {
+//     quizState,
+//     dispatch,
+//     actions: QUIZ_ACTIONS,
+//     submitResponse,
+//     freezeScroll,
+//     resumeScroll,
+//     setLenisInstance,
+//     preserveScrollPosition,
+//     restoreScrollPosition
+//   };
+
+//   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;
+// }
+
+// export function useQuiz() {
+//   const context = useContext(QuizContext);
+//   if (!context) {
+//     throw new Error("useQuiz must be used within a QuizProvider");
+//   }
+//   return context;
+// }
+
 import React, {
   createContext,
   useContext,
@@ -945,7 +1206,7 @@ const initialQuizState = {
   responses: {},
   score: 0,
   totalQuestions: 0,
-  totalModules: 15, // ✅ added for dynamic progress
+  totalModules: 15,
   isComplete: false,
   isLoading: false,
   startTime: new Date(),
@@ -956,7 +1217,6 @@ const initialQuizState = {
 function quizReducer(state, action) {
   switch (action.type) {
     case QUIZ_ACTIONS.SET_CURRENT_MODULE:
-      if (state.isComplete) return state; // ✅ Prevent navigation after complete
       return {
         ...state,
         currentModule: action.payload,
@@ -970,7 +1230,6 @@ function quizReducer(state, action) {
       };
 
     case QUIZ_ACTIONS.SET_CURRENT_SCENE:
-      if (state.isComplete) return state; // ✅ Prevent scene change after complete
       return {
         ...state,
         currentScene: action.payload
@@ -983,24 +1242,11 @@ function quizReducer(state, action) {
       const previousResponse = state.responses[questionId];
       const wasCorrectBefore = previousResponse?.isCorrect ?? false;
 
-      console.log("🎯 Reducer SUBMIT_RESPONSE:", {
-        questionId,
-        response,
-        isCorrect,
-        isNewQuestion,
-        wasCorrectBefore,
-        currentScore: state.score,
-        currentTotal: state.totalQuestions
-      });
-
       return {
         ...state,
         responses: {
           ...state.responses,
-          [questionId]: {
-            response,
-            isCorrect
-          }
+          [questionId]: { response, isCorrect }
         },
         score: (() => {
           if (isNewQuestion && isCorrect) return state.score + 1;
@@ -1017,13 +1263,9 @@ function quizReducer(state, action) {
     }
 
     case QUIZ_ACTIONS.UPDATE_SCORE:
-      return {
-        ...state,
-        score: action.payload
-      };
+      return { ...state, score: action.payload };
 
     case QUIZ_ACTIONS.SET_QUIZ_COMPLETE:
-      console.log("✅ Reducer: Marking quiz as complete");
       return {
         ...state,
         isComplete: true,
@@ -1031,22 +1273,13 @@ function quizReducer(state, action) {
       };
 
     case QUIZ_ACTIONS.SET_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
-      };
+      return { ...state, isLoading: action.payload };
 
     case QUIZ_ACTIONS.RESET_QUIZ:
-      return {
-        ...initialQuizState,
-        startTime: new Date()
-      };
+      return { ...initialQuizState, startTime: new Date() };
 
     case QUIZ_ACTIONS.SET_QUIZ_ACTIVE:
-      return {
-        ...state,
-        quizActive: action.payload
-      };
+      return { ...state, quizActive: action.payload };
 
     default:
       return state;
@@ -1058,25 +1291,44 @@ export function QuizProvider({ children }) {
   const scrollPositionRef = useRef({ x: 0, y: 0 });
   const lenisInstanceRef = useRef(null);
 
-  // Store reference to Lenis instance
   const setLenisInstance = useCallback((instance) => {
     lenisInstanceRef.current = instance;
   }, []);
 
-  // Load state from localStorage on mount with backward compatibility
+  // ✅ Load from localStorage safely
   useEffect(() => {
     const stored = localStorage.getItem("quizState");
     if (stored) {
       try {
-        const parsedState = { ...initialQuizState, ...JSON.parse(stored) }; // ✅ merge defaults
-        dispatch({ type: "LOAD_STATE", payload: parsedState });
+        const parsed = JSON.parse(stored);
+        const sessionExpired =
+          Date.now() - new Date(parsed.startTime).getTime() >
+          2 * 60 * 60 * 1000; // 2 hours
+
+        if (!sessionExpired) {
+          dispatch({
+            type: "LOAD_STATE",
+            payload: {
+              ...initialQuizState,
+              ...parsed,
+              isComplete: false // always start fresh
+            }
+          });
+        } else {
+          localStorage.removeItem("quizState");
+        }
       } catch (error) {
         console.error("Failed to parse stored quiz state:", error);
       }
     }
   }, []);
 
-  // Debounced localStorage save
+  // ✅ Auto-clear state on full reload
+  useEffect(() => {
+    dispatch({ type: QUIZ_ACTIONS.RESET_QUIZ });
+  }, []);
+
+  // ✅ Save to localStorage (debounced)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       localStorage.setItem("quizState", JSON.stringify(quizState));
@@ -1085,10 +1337,7 @@ export function QuizProvider({ children }) {
   }, [quizState]);
 
   const preserveScrollPosition = useCallback(() => {
-    scrollPositionRef.current = {
-      x: window.scrollX,
-      y: window.scrollY
-    };
+    scrollPositionRef.current = { x: window.scrollX, y: window.scrollY };
   }, []);
 
   const restoreScrollPosition = useCallback(() => {
@@ -1110,21 +1359,11 @@ export function QuizProvider({ children }) {
     async ({ questionId, response, correctAnswer }) => {
       preserveScrollPosition();
 
-      // ✅ Multi-answer safe check
       const isCorrect = Array.isArray(correctAnswer)
         ? Array.isArray(response) &&
           response.length === correctAnswer.length &&
           response.every((ans) => correctAnswer.includes(ans))
         : response === correctAnswer;
-
-      console.log("📝 Context submitResponse:", {
-        questionId,
-        response,
-        correctAnswer,
-        isCorrect,
-        currentScore: quizState.score,
-        currentTotal: quizState.totalQuestions
-      });
 
       dispatch({
         type: QUIZ_ACTIONS.SUBMIT_RESPONSE,
@@ -1132,15 +1371,9 @@ export function QuizProvider({ children }) {
       });
 
       setTimeout(restoreScrollPosition, 50);
-
       return isCorrect;
     },
-    [
-      preserveScrollPosition,
-      restoreScrollPosition,
-      quizState.score,
-      quizState.totalQuestions
-    ]
+    [preserveScrollPosition, restoreScrollPosition]
   );
 
   const freezeScroll = useCallback(() => {

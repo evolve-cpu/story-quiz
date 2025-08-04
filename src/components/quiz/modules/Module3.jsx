@@ -1712,10 +1712,10 @@ const Module3 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=4000", // Manually guessed scroll distance
+        end: "+=2000", // Manually guessed scroll distance
         scrub: 1.5,
         pin: true,
-        anticipatePin: 1,
+        // anticipatePin: 1,
         markers: false
       }
     });

@@ -2693,56 +2693,92 @@ const Module2 = () => {
     window.removeEventListener("touchmove", preventDefault);
   };
 
+  // useEffect(() => {
+  //   const scrollContainer = document.getElementById("module-2");
+
+  //   const tl = gsap.timeline({
+  //     // scrollTrigger: {
+  //     //   trigger: containerRef.current,
+  //     //   start: "top top",
+  //     //   end: "+=2000",
+  //     //   // end: +=${tl.duration() * 1000},
+  //     //   scrub: 1.5,
+  //     //   pin: true,
+  //     //   anticipatePin: 1,
+  //     //   markers: false
+  //     // }
+  //   });
+
+  //   tl.to({}, { duration: 4 });
+
+  //   // tl.fromTo(scene6Ref.current, { opacity: 0 }, { opacity: 1, duration: 1 });
+  //   // tl.to(scene6Ref.current, { scale: 1.05, duration: 1.5 });
+
+  //   tl.call(() => {
+  //     if (!quizCompleted) {
+  //       setShowQuiz(true);
+  //       disableScrollEvents();
+  //       tl.pause();
+  //     }
+  //   });
+
+  //   tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
+
+  //   ScrollTrigger.create({
+  //     trigger: containerRef.current,
+  //     start: "top top",
+  //     end: "+=2000",
+  //     // end: +=${tl.duration() * 1000},
+  //     scrub: 1.5,
+  //     pin: true,
+  //     anticipatePin: 1,
+  //     markers: false
+  //   });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((trigger) => {
+  //       if (trigger.trigger === containerRef.current) {
+  //         trigger.kill();
+  //       }
+  //     });
+  //     tl.kill();
+  //     enableScrollEvents(); // Clean up if unmounted early
+  //   };
+  // }, [quizCompleted]);
+
   useEffect(() => {
     const scrollContainer = document.getElementById("module-2");
 
-    const tl = gsap.timeline({
-      // scrollTrigger: {
-      //   trigger: containerRef.current,
-      //   start: "top top",
-      //   end: "+=2000",
-      //   // end: +=${tl.duration() * 1000},
-      //   scrub: 1.5,
-      //   pin: true,
-      //   anticipatePin: 1,
-      //   markers: false
-      // }
-    });
+    const tl = gsap.timeline();
 
-    tl.to({}, { duration: 4 });
+    // Example scene animation
+    tl.to(scene6Ref.current, { opacity: 1, duration: 1 }).to(
+      scene6Ref.current,
+      { scale: 1.05, duration: 1.5 }
+    );
 
-    // tl.fromTo(scene6Ref.current, { opacity: 0 }, { opacity: 1, duration: 1 });
-    // tl.to(scene6Ref.current, { scale: 1.05, duration: 1.5 });
-
-    tl.call(() => {
-      if (!quizCompleted) {
-        setShowQuiz(true);
-        disableScrollEvents();
-        tl.pause();
-      }
-    });
-
-    tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
-
-    ScrollTrigger.create({
+    // ScrollTrigger to pin and scrub animations
+    const trigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
       end: "+=2000",
-      // end: +=${tl.duration() * 1000},
       scrub: 1.5,
       pin: true,
       anticipatePin: 1,
-      markers: false
+      markers: false,
+      onEnter: () => {
+        if (!quizCompleted) {
+          setShowQuiz(true);
+          disableScrollEvents();
+          tl.pause(); // Pause animation when modal opens
+        }
+      }
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.trigger === containerRef.current) {
-          trigger.kill();
-        }
-      });
+      trigger.kill();
       tl.kill();
-      enableScrollEvents(); // Clean up if unmounted early
+      enableScrollEvents();
     };
   }, [quizCompleted]);
 
@@ -2751,6 +2787,7 @@ const Module2 = () => {
     setShowQuiz(false);
     setQuizCompleted(true);
     enableScrollEvents(); // Resume scroll
+    gsap.globalTimeline.resume();
 
     // submitResponse({
     //   questionId: "scene6_q1",

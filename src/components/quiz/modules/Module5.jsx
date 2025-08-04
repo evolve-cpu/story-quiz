@@ -238,7 +238,7 @@ const Module5 = () => {
       trigger: containerRef5.current,
       start: "top top",
       // end: `+=${tl.duration() * 1000}`,
-      end: "+=3500",
+      end: "+=4000",
       scrub: 1.5,
       pin: true,
       anticipatePin: 1,

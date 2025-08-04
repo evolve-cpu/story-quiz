@@ -772,7 +772,7 @@ const Module2 = React.lazy(() => import("./modules/Module2"));
 const Module3 = React.lazy(() => import("./modules/Module3"));
 const Module4 = React.lazy(() => import("./modules/Module4"));
 const Module5 = React.lazy(() => import("./modules/Module5"));
-const Module6 = React.lazy(() => import("./modules/Module6")); // ✅ FIXED case
+const Module6 = React.lazy(() => import("./modules/module6")); // ✅ FIXED case
 const Module7 = React.lazy(() => import("./modules/Module7"));
 const Module8 = React.lazy(() => import("./modules/Module8"));
 const Module9 = React.lazy(() => import("./modules/Module9"));

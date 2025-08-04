@@ -2722,12 +2722,12 @@ const Module2 = () => {
       }
     });
 
-    // tl.to(scene6Ref.current, { opacity: 0, scale: 1.1, duration: 1 });
+    tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
 
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
-      end: "+=1000",
+      end: "+=2000",
       // end: +=${tl.duration() * 1000},
       scrub: 1.5,
       pin: true,

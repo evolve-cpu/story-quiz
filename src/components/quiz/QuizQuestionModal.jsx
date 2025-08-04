@@ -693,19 +693,19 @@ const QuizQuestionModal = ({
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center px-2 sm:px-4 bg-black/60 ${backgroundClassName}`}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center px-2 sm:px-4 bg-black ${backgroundClassName}`}
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}
     >
-      <div className="bg-black/60 border border-evolve-inchworm rounded-xl p-4 sm:p-6 w-full max-w-md z-[10000]">
-        <h2 className="text-white text-base sm:text-xl font-bold mb-3 sm:mb-4 leading-snug sm:leading-normal">
+      <div className="bg-black border border-evolve-inchworm rounded-xl p-4 sm:p-6 w-full max-w-md z-[10000]">
+        <h2 className="text-white text-base sm:text-xl font-bold mb-3 lowercase sm:mb-4 leading-snug sm:leading-normal">
           {question}
         </h2>
 
-        <div className="space-y-2 sm:space-y-3">
+        <div className="space-y-2 lowercase sm:space-y-3">
           {options.map((opt, idx) => {
             const isSelected =
               type === "multi" ? selected.includes(idx) : selected === idx;
@@ -734,7 +734,7 @@ const QuizQuestionModal = ({
               <div
                 key={idx}
                 onClick={() => toggleOption(idx)}
-                className={`border border-white p-2 sm:p-3 rounded-md cursor-pointer flex items-center gap-2 ${bgColor} ${textColor} text-sm sm:text-base`}
+                className={`border border-white p-2 sm:p-3 rounded-md lowercase cursor-pointer flex items-center gap-2 ${bgColor} ${textColor} text-sm sm:text-base`}
               >
                 {type === "bullet" && (
                   <div
@@ -750,14 +750,14 @@ const QuizQuestionModal = ({
         </div>
 
         {submitted && reason && (
-          <div className="text-evolve-inchworm font-medium mt-3 sm:mt-4 text-sm sm:text-base leading-snug">
+          <div className="text-evolve-inchworm lowercase font-medium mt-3 sm:mt-4 text-sm sm:text-base leading-snug">
             Reason: {reason}
           </div>
         )}
 
         <button
           onClick={submitted ? handleClose : handleSubmit}
-          className="w-full mt-5 sm:mt-6 bg-evolve-lavender-indigo text-white py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-semibold"
+          className="w-full mt-5 sm:mt-6 bg-evolve-lavender-indigo lowercase text-white py-2 sm:py-2.5 rounded-md text-sm sm:text-base font-semibold"
         >
           {submitted ? "Next" : "Submit"}
         </button>

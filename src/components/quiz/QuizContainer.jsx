@@ -564,6 +564,8 @@ import { useQuizProgress } from "../../hooks/useQuizProgress";
 import QuizComplete from "./QuizComplete";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { evolveLogo } from "../../assets/images/avatar";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -638,6 +640,17 @@ function QuizContent() {
 
   return (
     <div className="relative bg-black min-h-[1000vh] overflow-x-hidden overflow-y-visible scrollbar-hide">
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-40 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
+      {/* ✅ Fixed Logo at top-left */}
+      {/* ✅ Fixed Logo at top-left, clickable */}
+      <Link to="/" className="fixed top-6 left-6 z-50">
+        <img
+          src={evolveLogo}
+          alt="Evolve Logo"
+          className="w-20 sm:w-28 h-auto cursor-pointer transition-transform hover:scale-105 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
+        />
+      </Link>
+
       <Suspense fallback={<div className="text-white p-10">Loading...</div>}>
         {loadedModules.includes(1) && (
           <div id="module-1">
@@ -725,6 +738,11 @@ function QuizContent() {
           </div>
         )}
       </Suspense>
+      {/* Gradient Overlays */}
+      <div className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none">
+        <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent" />
+        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
     </div>
   );
 }

@@ -1094,6 +1094,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   char_1,
   char_1_1,
+  down_arrow,
   story_intro,
   story_scene_1,
   story_scene_1_mobile,
@@ -1109,7 +1110,7 @@ import {
   story_scene_5_mobile
 } from "../../../assets/images/avatar";
 
-import StoryScene3 from "../StoryScene3";
+// import StoryScene3 from "../StoryScene3";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1120,6 +1121,7 @@ const Module1 = () => {
   const introBoxRef = useRef(null);
   const bottomTextRef = useRef(null);
   const introImageRef = useRef(null);
+  const downArrowRef = useRef(null);
   const scene1Ref = useRef(null);
   const scene1TextRef = useRef(null);
   const scene2Ref = useRef(null);
@@ -1163,6 +1165,14 @@ const Module1 = () => {
       ],
       { opacity: 0, scale: 1 }
     );
+    // ✅ Initial position for character in Scene 4
+    gsap.set(char1AltRef.current, {
+      opacity: 0,
+      x: isMobile ? -20 : -70,
+      y: isMobile ? 50 : 250, // partially hidden
+      width: isMobile ? "150px" : "750px",
+      height: isMobile ? "auto" : "750px"
+    });
 
     const masterTl = gsap.timeline({
       scrollTrigger: {
@@ -1193,10 +1203,30 @@ const Module1 = () => {
         { opacity: 0, duration: 1.2, ease: "power2.out" },
         "<0.8"
       )
+      .to(
+        [
+          headingRef.current,
+          subHeadingRef.current,
+          introBoxRef.current,
+          bottomTextRef.current,
+          downArrowRef.current // ✅ Added arrow here
+        ],
+        { opacity: 0, duration: 1.2, ease: "power2.out" },
+        "<0.8"
+      )
 
+      // ✅ Scene 1 changes
       .to(scene1Ref.current, { opacity: 1, duration: 1 }, "+=0.2")
       .to(scene1TextRef.current, { opacity: 1, duration: 1 }, "<0.3")
-      .to(scene1Ref.current, { scale: 1.35, duration: 2.5 }, "<")
+      .to(
+        scene1Ref.current,
+        {
+          scale: 2,
+          duration: 2.5,
+          transformOrigin: "50% 10%" // Focus zoom at top-center
+        },
+        "<"
+      )
       .to(scene1TextRef.current, { opacity: 0, duration: 0.6 }, "+=0.4")
       .to(scene1Ref.current, { opacity: 0, duration: 0.6 }, "<0.2")
 
@@ -1231,15 +1261,25 @@ const Module1 = () => {
         { xPercent: 0, duration: 2 },
         "<"
       )
-      .set(char1AltRef.current, {
-        x: isMobile ? 0 : 5,
-        y: isMobile ? 0 : 10
-      })
-      .to(char1AltRef.current, { opacity: 1, duration: 0.4 })
+      // .set(char1AltRef.current, {
+      //   x: isMobile ? 0 : 5,
+      //   y: isMobile ? 0 : 10
+      // })
+      // .to(char1AltRef.current, { opacity: 1, duration: 0.4 })
+      // .to(char1AltRef.current, {
+      //   x: isMobile ? 20 : 30,
+      //   y: isMobile ? -10 : -20,
+      //   duration: 1.2,
+      //   ease: "power2.inOut"
+      // })
+
+      // ✅ Scene 4 Character Animation
+      .to(char1AltRef.current, { opacity: 1, duration: 1.5 })
       .to(char1AltRef.current, {
-        x: isMobile ? 20 : 30,
-        y: isMobile ? -10 : -20,
-        duration: 1.2,
+        x: isMobile ? 100 : 420, // More right for desktop
+        y: isMobile ? -90 : 40, // More upward for mobile
+        scale: 0.8, // Slight scale for depth effect
+        duration: 8,
         ease: "power2.inOut"
       })
 
@@ -1275,33 +1315,45 @@ const Module1 = () => {
       <div className="absolute w-full h-full px-4 flex flex-col items-center justify-center z-10">
         <h1
           ref={headingRef}
-          className="text-4xl md:text-8xl font-extrabold mb-4"
+          className="text-4xl md:text-7xl font-extrabold mb-2" // bigger heading with less gap
         >
           seen/unseen
         </h1>
         <p
           ref={subHeadingRef}
-          className="text-base md:text-xl mb-6 font-bold text-center"
+          className="text-base md:text-xl mb-3 font-bold text-center" // slightly bigger subtext, less gap
         >
           discover the logic behind the ordinary
         </p>
         <div
           ref={introBoxRef}
-          className="bg-[#A35BFB] rounded-2xl pt-6 px-2 pb-2 text-center w-full max-w-xs md:max-w-md"
+          className="bg-[#A35BFB] rounded-2xl pt-4 px-2 pb-2 text-center w-full max-w-xs md:max-w-sm"
         >
-          <h2 className="text-white text-base md:text-xl mb-4">
+          <h2 className="text-white text-base md:text-lg mb-3">
             welcome to the pawcity!
           </h2>
           <img
             ref={introImageRef}
             src={story_intro}
             alt="Intro"
-            className="mx-auto rounded-xl w-full h-auto object-cover"
+            className="mx-auto rounded-xl w-full h-auto object-cover" // full width image
           />
         </div>
-        <p ref={bottomTextRef} className="mt-6 text-sm md:text-md">
-          scroll down to deep dive into the world
-        </p>
+        {/* ✅ Add spacing below the box */}
+        <div className="mt-6 flex flex-col items-center">
+          <img
+            src={down_arrow}
+            ref={downArrowRef}
+            alt="Scroll Down"
+            className="w-8 h-8 mb-2 z-0 animate-bounce"
+          />
+          <p
+            ref={bottomTextRef}
+            className="text-sm md:text-lg font-normal text-center"
+          >
+            scroll down to deep dive into the world
+          </p>
+        </div>
       </div>
 
       {/* SCENE 1 */}
@@ -1379,7 +1431,7 @@ const Module1 = () => {
       <div
         ref={bubbleTextRef}
         className={`absolute z-40
-    ${isMobile ? "top-[55%] left-[50%]" : "top-1/2 left-[60%]"}
+    ${isMobile ? "top-[55%] left-[50%]" : "top-[41%] left-[66%]"}
     transform -translate-x-1/2 -translate-y-1/2 opacity-0
   `}
       >
@@ -1425,15 +1477,23 @@ const Module1 = () => {
         />
 
         {/* Single Character Image: char_1_1 handles both entry and exit */}
-        <img
+        {/* <img
           ref={char1AltRef}
           src={char_1_1}
           alt="Character"
           className={`absolute -bottom-10 -left-5 ${
             isMobile ? "w-[200px]" : "w-[650px] h-[650px] object-contain"
           } object-contain opacity-0 z-30`}
-        />
+        /> */}
 
+        <img
+          ref={char1AltRef}
+          src={char_1_1}
+          alt="Character"
+          className={`absolute left-0 bottom-0 object-contain opacity-0 z-30 ${
+            isMobile ? "w-[200px]" : "w-[700px] h-[700px]"
+          }`}
+        />
         <div className="absolute bottom-6 left-6 z-40">
           <div
             className={`bg-black/80 text-white rounded-md w-fit 
@@ -1452,7 +1512,7 @@ const Module1 = () => {
         <img
           src={isMobile ? story_scene_5_mobile : story_scene_5_1}
           alt="Scene 5"
-          className="absolute scale-y-[85%]"
+          className="absolute scale-y-[100%]"
         />
         <div
           ref={bubble2Ref}

@@ -300,23 +300,25 @@ const Module7 = () => {
       }
     });
 
-    // === PHASE 1: Scene 12 ===
-    tl.to(scene12Ref.current, { opacity: 1, duration: 1.5, ease: "power2.out" })
-      .to(scene12TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
+    // === PHASE 1: Scene 12 (appear and disappear together) ===
+    tl.to([scene12Ref.current, scene12TextRef.current], {
+      opacity: 1,
+      duration: 0.1, // instant appearance
+      ease: "none"
+    })
       .to(scene12Ref.current, {
         scale: isMobile ? 1.02 : 1.05,
         duration: 2,
         ease: "power1.inOut"
       })
       .to({}, { duration: 2 })
-      .to(scene12TextRef.current, { opacity: 0, duration: 1 })
-      .to(scene12Ref.current, {
+      .to([scene12Ref.current, scene12TextRef.current], {
         opacity: 0,
-        duration: 1.5,
+        duration: 1,
         ease: "power2.inOut"
       });
 
-    // === PHASE 2: Scene 13 ===
+    // === PHASE 2: Scene 13 (unchanged) ===
     tl.to(scene13BgRef.current, { opacity: 1, duration: 2, ease: "power2.out" })
       .to(scene13CharRef.current, {
         opacity: 1,
@@ -326,8 +328,8 @@ const Module7 = () => {
       })
       .to(scene13TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
       .to(scene13CharRef.current, {
-        x: isMobile ? "-20vw" : "-30vw", // move more left
-        y: isMobile ? "-1vh" : "-5vh", // less upward movement
+        x: isMobile ? "-20vw" : "-30vw",
+        y: isMobile ? "-1vh" : "-5vh",
         scale: isMobile ? 0.55 : 0.75,
         duration: isMobile ? 4 : 6,
         ease: "power2.inOut"

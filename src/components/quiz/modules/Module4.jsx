@@ -318,7 +318,7 @@ const Module4 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=1500",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -327,14 +327,15 @@ const Module4 = () => {
     });
 
     // Intro animation
-    tl.fromTo(
-      scene9Ref.current,
-      { opacity: 0, scale: 0.95, y: 60 },
-      { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power2.out" }
-    );
+    // tl.fromTo(
+    //   scene9Ref.current,
+    //   { opacity: 0, scale: 0.95, y: 60 },
+    //   { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power2.out" }
+    // );
 
     // Show text explanation
-    tl.to(scene9TextRef.current, { opacity: 1, duration: 1 }, "<0.5");
+    // tl.to(scene9TextRef.current, { opacity: 1, duration: 1 }, "<0.5");
+    tl.to(scene9TextRef.current, { opacity: 1, duration: 1 });
 
     // Trigger modal and pause
     tl.call(() => {
@@ -349,7 +350,7 @@ const Module4 = () => {
     tl.to(scene9TextRef.current, { opacity: 0, duration: 1 });
 
     // Outro animation (only runs if quiz is completed)
-    tl.to(scene9Ref.current, { opacity: 0, scale: 1.05, duration: 1 });
+    // tl.to(scene9Ref.current, { opacity: 0, scale: 1.05, duration: 1 });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {
@@ -366,6 +367,16 @@ const Module4 = () => {
     setShowQuiz2(false);
     setQuiz2Completed(true);
     enableScrollEvents();
+
+    const trigger = ScrollTrigger.getAll().find(
+      (t) => t.trigger === containerRef.current
+    );
+    if (trigger) {
+      const timeline = trigger.animation; // get gsap timeline
+      if (timeline) {
+        timeline.play(timeline.duration()); // jump to end
+      }
+    }
   };
 
   return (
@@ -401,7 +412,7 @@ const Module4 = () => {
           questionId="scene9_q1"
           question="Why are the red, yellow, and green lights always stacked this way?"
           options={[
-            "Grooves provide better grip for shoes",
+            "to make the lights easier to see from a distance",
             "To help colour-blind people use position as a cue",
             "To ensure consistency and reduce confusion for drivers",
             "All of the above"

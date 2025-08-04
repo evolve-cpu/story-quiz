@@ -417,6 +417,143 @@
 
 // export default Module8;
 
+// import React, { useEffect, useRef, useState } from "react";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import {
+//   story_scene_13_bg,
+//   story_scene_13_mobile
+// } from "../../../assets/images/avatar";
+// import QuizQuestionModal from "../QuizQuestionModal";
+// import { useQuizProgress } from "../../../hooks/useQuizProgress";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const Module8 = () => {
+//   const containerRef = useRef(null);
+//   const sceneRef = useRef(null);
+//   const [showQuiz, setShowQuiz] = useState(false);
+//   const [quizCompleted, setQuizCompleted] = useState(false);
+//   const { submitResponse } = useQuizProgress();
+//   const isMobile = window.innerWidth <= 768;
+
+//   const preventDefault = (e) => e.preventDefault();
+
+//   const disableScrollEvents = () => {
+//     document.body.style.overflow = "hidden";
+//     const scrollContainer = document.getElementById("module-8");
+//     if (scrollContainer) scrollContainer.style.overflow = "hidden";
+
+//     window.addEventListener("wheel", preventDefault, { passive: false });
+//     window.addEventListener("touchmove", preventDefault, { passive: false });
+//   };
+
+//   const enableScrollEvents = () => {
+//     document.body.style.overflow = "auto";
+//     const scrollContainer = document.getElementById("module-8");
+//     if (scrollContainer) scrollContainer.style.overflow = "auto";
+
+//     window.removeEventListener("wheel", preventDefault);
+//     window.removeEventListener("touchmove", preventDefault);
+//   };
+
+//   useEffect(() => {
+//     gsap.set(sceneRef.current, { opacity: 0, scale: 1 });
+
+//     const tl = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: containerRef.current,
+//         start: "top top",
+//         end: "+=2000",
+//         scrub: 1.5,
+//         pin: true,
+//         anticipatePin: 1,
+//         markers: false
+//       }
+//     });
+
+//     tl.to(sceneRef.current, { opacity: 1, duration: 1 });
+//     tl.to(sceneRef.current, {
+//       scale: isMobile ? 1.02 : 1.05,
+//       duration: isMobile ? 1 : 1.5
+//     });
+
+//     tl.call(() => {
+//       if (!quizCompleted) {
+//         setShowQuiz(true);
+//         disableScrollEvents();
+//         tl.pause();
+//       }
+//     });
+
+//     tl.to(sceneRef.current, {
+//       opacity: 0,
+//       scale: isMobile ? 1.05 : 1.1,
+//       duration: 1
+//     });
+
+//     return () => {
+//       ScrollTrigger.getAll().forEach((trigger) => {
+//         if (trigger.trigger === containerRef.current) {
+//           trigger.kill();
+//         }
+//       });
+//       tl.kill();
+//       enableScrollEvents();
+//     };
+//   }, [quizCompleted, isMobile]);
+
+//   const handleQuiz4Close = () => {
+//     setShowQuiz(false);
+//     setQuizCompleted(true);
+//     enableScrollEvents();
+//   };
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       id="module-8"
+//       className="relative w-full h-screen text-white lowercase bg-black"
+//     >
+//       {/* Scene 13 Background */}
+//       <div
+//         ref={sceneRef}
+//         className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"
+//       >
+//         <img
+//           src={isMobile ? story_scene_13_mobile : story_scene_13_bg}
+//           alt="Scene 13"
+//           className={`object-cover ${
+//             isMobile ? "w-[95%] h-auto rounded-md" : "w-full h-full"
+//           }`}
+//         />
+//       </div>
+
+//       {/* Modal Quiz */}
+//       {showQuiz && (
+//         <QuizQuestionModal
+//           isVisible={showQuiz}
+//           onClose={handleQuiz4Close}
+//           questionId="scene13_q1"
+//           question="Why is this door handle like this?"
+//           options={[
+//             "1. They look more modern",
+//             "2. They are easier to open quickly in emergencies",
+//             "3. They are cheaper to manufacture",
+//             "4. They take up less space"
+//           ]}
+//           correctIndex={1}
+//           reason="Horizontal push bars allow anyone to exit quickly and easily, even in a panic, by simply pushing."
+//           backgroundImage={isMobile ? story_scene_13_mobile : story_scene_13_bg}
+//           type="single"
+//         />
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Module8;
+
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -458,13 +595,14 @@ const Module8 = () => {
   };
 
   useEffect(() => {
-    gsap.set(sceneRef.current, { opacity: 0, scale: 1 });
+    // ✅ Immediately visible
+    gsap.set(sceneRef.current, { opacity: 1, scale: 1 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=1000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -472,7 +610,7 @@ const Module8 = () => {
       }
     });
 
-    tl.to(sceneRef.current, { opacity: 1, duration: 1 });
+    // ✅ Removed fade-in intro; only scale animation remains
     tl.to(sceneRef.current, {
       scale: isMobile ? 1.02 : 1.05,
       duration: isMobile ? 1 : 1.5
@@ -486,6 +624,7 @@ const Module8 = () => {
       }
     });
 
+    // Outro (fade out)
     tl.to(sceneRef.current, {
       opacity: 0,
       scale: isMobile ? 1.05 : 1.1,

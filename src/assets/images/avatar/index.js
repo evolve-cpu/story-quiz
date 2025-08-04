@@ -91,6 +91,7 @@ import thunder_1 from "./thunder_1.svg";
 import thunder_2 from "./thunder_2.svg";
 import eye from "./eye.svg";
 import search from "./search.svg";
+import down_arrow from "./down_arrow.svg";
 
 export {
   boy_with_tablet,
@@ -185,5 +186,6 @@ export {
   thunder_1,
   thunder_2,
   eye,
-  search
+  search,
+  down_arrow
 };

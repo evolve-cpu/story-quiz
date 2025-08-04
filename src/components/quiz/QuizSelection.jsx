@@ -876,7 +876,7 @@ const QuizSelection = () => {
         element.style.opacity = "0";
         element.style.transform = "translateY(30px)";
         setTimeout(() => {
-          element.style.transition = "all 1s ease-out";
+          element.style.transition = "all 0.6s ease-out"; // Faster
           element.style.opacity = "1";
           element.style.transform = "translateY(0)";
         }, delay);
@@ -885,10 +885,9 @@ const QuizSelection = () => {
 
     const timeout = setTimeout(() => {
       animateElement(headingRef.current, 0);
-      animateElement(subTextRef.current, 200);
-      cardsRef.current.forEach((card, index) =>
-        animateElement(card, 500 + index * 300)
-      );
+      animateElement(subTextRef.current, 100);
+      // ✅ Animate both cards together without stagger
+      cardsRef.current.forEach((card) => animateElement(card, 300));
     }, 100);
 
     return () => clearTimeout(timeout);

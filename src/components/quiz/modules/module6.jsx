@@ -604,7 +604,7 @@ const Module6 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=4000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -647,7 +647,7 @@ const Module6 = () => {
     };
   }, [quizCompleted, isMobile]);
 
-  const handleQuizClose = () => {
+  const handleQuiz3Close = () => {
     setShowQuiz(false);
     setQuizCompleted(true);
     enableScrollEvents();
@@ -691,7 +691,7 @@ const Module6 = () => {
       {showQuiz && (
         <QuizQuestionModal
           isVisible={showQuiz}
-          onClose={handleQuizClose}
+          onClose={handleQuiz3Close}
           questionId="scene11_q1"
           question="What went wrong here?"
           options={[

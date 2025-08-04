@@ -334,51 +334,177 @@ const Module5 = () => {
   const scene10CharRef5 = useRef(null);
   const scene10BgRef5 = useRef(null);
 
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   const tl = gsap.timeline();
+
+  //   // Force minimum duration for proper scroll space
+  //   tl.to({}, { duration: 2 });
+
+  //   // --- Scene 8 (Instant Show) ---
+  //   tl.set([scene8BgRef5.current, scene8CharRef5.current], { opacity: 1 });
+  //   tl.set(scene8TextRef5.current, { opacity: 1 });
+
+  //   // Small movement for BG (optional)
+  //   tl.to(scene8BgRef5.current, {
+  //     x: "30%",
+  //     duration: isMobile ? 1.5 : 2,
+  //     ease: "power2.inOut"
+  //   });
+
+  //   // Hide text and fade out scene
+  //   tl.to(scene8TextRef5.current, { opacity: 0, duration: 0.5 }, "+=1");
+  //   tl.to([scene8BgRef5.current, scene8CharRef5.current], {
+  //     opacity: 0,
+  //     // scale: 1.05,
+  //     duration: 1
+  //   });
+
+  //   // --- Scene 10 (Instant Show) ---
+  //   tl.set([scene10CharRef5.current, scene10BgRef5.current], { opacity: 1 });
+  //   tl.to(scene10BgRef5.current, {
+  //     scale: 1.3,
+  //     duration: 3,
+  //     ease: "power2.out"
+  //   });
+
+  //   // ScrollTrigger with dynamic end
+  //   ScrollTrigger.create({
+  //     trigger: containerRef5.current,
+  //     start: "top top",
+  //     // end: +=${tl.duration() * 1000},
+  //     end: "+=4500",
+  //     scrub: 1.5,
+  //     pin: true,
+  //     anticipatePin: 1,
+  //     markers: false
+  //   });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((trigger) => {
+  //       if (trigger.trigger === containerRef5.current) trigger.kill();
+  //     });
+  //     tl.kill();
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   const tl = gsap.timeline();
+
+  //   // Force minimum duration for proper scroll space
+  //   tl.to({}, { duration: 2 });
+
+  //   // --- Scene 8 (Show) ---
+  //   tl.set([scene8BgRef5.current, scene8CharRef5.current], { opacity: 1 });
+  //   tl.set(scene8TextRef5.current, { opacity: 1 });
+
+  //   // Background slight movement
+  //   tl.to(scene8BgRef5.current, {
+  //     x: "30%",
+  //     duration: isMobile ? 1.5 : 2,
+  //     ease: "power2.inOut"
+  //   });
+
+  //   // Hide text
+  //   tl.to(scene8TextRef5.current, { opacity: 0, duration: 0.5 }, "+=1");
+
+  //   // ✅ Crossfade Scene 8 → Scene 10
+  //   tl.to(
+  //     [scene8BgRef5.current, scene8CharRef5.current],
+  //     { opacity: 0, duration: 1 },
+  //     "+=0"
+  //   )
+  //     .to(
+  //       [scene10CharRef5.current, scene10BgRef5.current],
+  //       { opacity: 1, duration: 1.2 },
+  //       "<0.3"
+  //     )
+
+  //     // --- Scene 10 Animation ---
+  //     .to(scene10BgRef5.current, {
+  //       scale: 1.3,
+  //       duration: 3,
+  //       ease: "power2.out"
+  //     });
+
+  //   // ScrollTrigger for the whole module
+  //   ScrollTrigger.create({
+  //     trigger: containerRef5.current,
+  //     start: "top top",
+  //     end: "+=4500",
+  //     scrub: 1.5,
+  //     pin: true,
+  //     anticipatePin: 1,
+  //     markers: false
+  //   });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((trigger) => {
+  //       if (trigger.trigger === containerRef5.current) trigger.kill();
+  //     });
+  //     tl.kill();
+  //   };
+  // }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Initial opacity
+    gsap.set(
+      [
+        scene8BgRef5.current,
+        scene8CharRef5.current,
+        scene10BgRef5.current,
+        scene10CharRef5.current
+      ],
+      { opacity: 0 }
+    );
+    gsap.set(scene8TextRef5.current, { opacity: 0 });
+
     const tl = gsap.timeline();
 
-    // Force minimum duration for proper scroll space
-    tl.to({}, { duration: 2 });
+    // --- Scene 8 ---
+    tl.set([scene8BgRef5.current, scene8CharRef5.current], { opacity: 1 })
+      .set(scene8TextRef5.current, { opacity: 1 })
+      .to(scene8BgRef5.current, {
+        x: "30%",
+        duration: isMobile ? 1.5 : 2,
+        ease: "power2.inOut"
+      })
+      .to(scene8TextRef5.current, { opacity: 0, duration: 0.5 }, "+=1")
 
-    // --- Scene 8 (Instant Show) ---
-    tl.set([scene8BgRef5.current, scene8CharRef5.current], { opacity: 1 });
-    tl.set(scene8TextRef5.current, { opacity: 1 });
+      // ✅ Crossfade Scene 8 → Scene 10
+      .to(
+        [scene8BgRef5.current, scene8CharRef5.current],
+        { opacity: 0, duration: 1 },
+        "+=0"
+      )
+      .to(
+        [scene10BgRef5.current, scene10CharRef5.current],
+        { opacity: 1, duration: 1.2 },
+        "<0.3"
+      )
 
-    // Small movement for BG (optional)
-    tl.to(scene8BgRef5.current, {
-      x: "30%",
-      duration: isMobile ? 1.5 : 2,
-      ease: "power2.inOut"
-    });
+      // --- Scene 10 ---
+      .to(scene10BgRef5.current, {
+        scale: 1.3,
+        duration: 3,
+        ease: "power2.out"
+      });
 
-    // Hide text and fade out scene
-    tl.to(scene8TextRef5.current, { opacity: 0, duration: 0.5 }, "+=1");
-    tl.to([scene8BgRef5.current, scene8CharRef5.current], {
-      opacity: 0,
-      // scale: 1.05,
-      duration: 1
-    });
-
-    // --- Scene 10 (Instant Show) ---
-    tl.set([scene10CharRef5.current, scene10BgRef5.current], { opacity: 1 });
-    tl.to(scene10BgRef5.current, {
-      scale: 1.3,
-      duration: 3,
-      ease: "power2.out"
-    });
-
-    // ScrollTrigger with dynamic end
+    // ScrollTrigger
     ScrollTrigger.create({
       trigger: containerRef5.current,
       start: "top top",
-      // end: +=${tl.duration() * 1000},
       end: "+=4500",
       scrub: 1.5,
       pin: true,
       anticipatePin: 1,
-      markers: false
+      markers: false,
+      animation: tl
     });
 
     return () => {

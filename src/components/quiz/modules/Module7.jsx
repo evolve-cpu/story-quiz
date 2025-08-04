@@ -274,9 +274,78 @@ const Module7 = () => {
 
   const isMobile = window.innerWidth <= 768;
 
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   gsap.set(
+  //     [
+  //       scene12Ref.current,
+  //       scene13BgRef.current,
+  //       scene13CharRef.current,
+  //       scene12TextRef.current,
+  //       scene13TextRef.current
+  //     ],
+  //     { opacity: 0 }
+  //   );
+
+  //   const tl = gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: containerRef.current,
+  //       start: "top top",
+  //       end: "+=4000",
+  //       scrub: 1.5,
+  //       pin: true,
+  //       anticipatePin: 1,
+  //       markers: false
+  //     }
+  //   });
+
+  //   // === PHASE 1: Scene 12 (appear and disappear together) ===
+  //   tl.to([scene12Ref.current, scene12TextRef.current], {
+  //     opacity: 1,
+  //     duration: 0.1, // instant appearance
+  //     ease: "none"
+  //   })
+  //     .to(scene12Ref.current, {
+  //       scale: isMobile ? 1.02 : 1.05,
+  //       duration: 2,
+  //       ease: "power1.inOut"
+  //     })
+  //     .to({}, { duration: 2 })
+  //     .to([scene12Ref.current, scene12TextRef.current], {
+  //       opacity: 0,
+  //       duration: 1,
+  //       ease: "power2.inOut"
+  //     });
+
+  //   // === PHASE 2: Scene 13 (unchanged) ===
+  //   tl.to(scene13BgRef.current, { opacity: 1, duration: 2, ease: "power2.out" })
+  //     .to(scene13CharRef.current, {
+  //       opacity: 1,
+  //       scale: isMobile ? 0.6 : 1,
+  //       duration: 1.5,
+  //       ease: "power2.out"
+  //     })
+  //     .to(scene13TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
+  //     .to(scene13CharRef.current, {
+  //       x: isMobile ? "-20vw" : "-30vw",
+  //       y: isMobile ? "-1vh" : "-5vh",
+  //       scale: isMobile ? 0.55 : 0.75,
+  //       duration: isMobile ? 4 : 6,
+  //       ease: "power2.inOut"
+  //     })
+  //     .to(scene13TextRef.current, { opacity: 0, duration: 1 });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((t) => t.kill());
+  //     tl.kill();
+  //   };
+  // }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Initial opacity reset
     gsap.set(
       [
         scene12Ref.current,
@@ -300,10 +369,10 @@ const Module7 = () => {
       }
     });
 
-    // === PHASE 1: Scene 12 (appear and disappear together) ===
+    // === Scene 12 ===
     tl.to([scene12Ref.current, scene12TextRef.current], {
       opacity: 1,
-      duration: 0.1, // instant appearance
+      duration: 0.3, // quick fade-in
       ease: "none"
     })
       .to(scene12Ref.current, {
@@ -311,15 +380,20 @@ const Module7 = () => {
         duration: 2,
         ease: "power1.inOut"
       })
-      .to({}, { duration: 2 })
+
+      // ✅ Crossfade Scene12 → Scene13
       .to([scene12Ref.current, scene12TextRef.current], {
         opacity: 0,
         duration: 1,
         ease: "power2.inOut"
-      });
+      })
+      .to(
+        scene13BgRef.current,
+        { opacity: 1, duration: 1.2, ease: "power2.out" },
+        "<0.4"
+      )
 
-    // === PHASE 2: Scene 13 (unchanged) ===
-    tl.to(scene13BgRef.current, { opacity: 1, duration: 2, ease: "power2.out" })
+      // === Scene 13 ===
       .to(scene13CharRef.current, {
         opacity: 1,
         scale: isMobile ? 0.6 : 1,

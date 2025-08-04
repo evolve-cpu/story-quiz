@@ -1165,11 +1165,12 @@ const Module1 = () => {
       ],
       { opacity: 0, scale: 1 }
     );
+
     // ✅ Initial position for character in Scene 4
     gsap.set(char1AltRef.current, {
       opacity: 0,
       x: isMobile ? -20 : -70,
-      y: isMobile ? 50 : 250, // partially hidden
+      y: isMobile ? 50 : 250,
       width: isMobile ? "150px" : "750px",
       height: isMobile ? "auto" : "750px"
     });
@@ -1209,13 +1210,13 @@ const Module1 = () => {
           subHeadingRef.current,
           introBoxRef.current,
           bottomTextRef.current,
-          downArrowRef.current // ✅ Added arrow here
+          downArrowRef.current
         ],
         { opacity: 0, duration: 1.2, ease: "power2.out" },
         "<0.8"
       )
 
-      // ✅ Scene 1 changes
+      // ✅ Scene 1 → Scene 2 (crossfade)
       .to(scene1Ref.current, { opacity: 1, duration: 1 }, "+=0.2")
       .to(scene1TextRef.current, { opacity: 1, duration: 1 }, "<0.3")
       .to(
@@ -1223,23 +1224,24 @@ const Module1 = () => {
         {
           scale: 2,
           duration: 2.5,
-          transformOrigin: "50% 10%" // Focus zoom at top-center
+          transformOrigin: "50% 10%"
         },
         "<"
       )
       .to(scene1TextRef.current, { opacity: 0, duration: 0.6 }, "+=0.4")
-      .to(scene1Ref.current, { opacity: 0, duration: 0.6 }, "<0.2")
-
-      .to(scene2Ref.current, { opacity: 1, duration: 1.2 }, "<")
+      .to(scene2Ref.current, { opacity: 1, duration: 1.2 }, "<0.2") // overlap fade-in
+      .to(scene1Ref.current, { opacity: 0, duration: 0.6 }, "<") // fade-out at same time
       .to(scene2TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
       .to(scene2Ref.current, { opacity: 1, duration: 1 }, 6)
       .to(scene2TextRef.current, { opacity: 1, duration: 1 }, 6.5)
       .to(scene2Ref.current, { opacity: 0.7, scale: 1.02, duration: 1 }, 9)
-      .to(scene2TextRef.current, { opacity: 0, duration: 1 }, 9)
-      .to(scene2Ref.current, { opacity: 0, duration: 0.6 }, "+=0.4")
 
-      .to(scene3Ref.current, { opacity: 1, duration: 1.2 }, "<")
+      // ✅ Scene 2 → Scene 3 (crossfade)
+      .to(scene2TextRef.current, { opacity: 0, duration: 1 }, 9)
+      .to(scene3Ref.current, { opacity: 1, duration: 1.2 }, "<0.3") // fade in early
+      .to(scene2Ref.current, { opacity: 0, duration: 0.6 }, "<0.2") // fade out overlap
       .to(scene3TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
+
       .to(
         bubbleTextRef.current,
         {
@@ -1254,6 +1256,8 @@ const Module1 = () => {
         opacity: 0,
         duration: 1
       })
+
+      // ✅ Scene 3 → Scene 4 (no black, horizontal slide already works)
       .to(scene3Ref.current, { xPercent: -100, duration: 2 }, "<")
       .fromTo(
         scene4Ref.current,
@@ -1261,34 +1265,23 @@ const Module1 = () => {
         { xPercent: 0, duration: 2 },
         "<"
       )
-      // .set(char1AltRef.current, {
-      //   x: isMobile ? 0 : 5,
-      //   y: isMobile ? 0 : 10
-      // })
-      // .to(char1AltRef.current, { opacity: 1, duration: 0.4 })
-      // .to(char1AltRef.current, {
-      //   x: isMobile ? 20 : 30,
-      //   y: isMobile ? -10 : -20,
-      //   duration: 1.2,
-      //   ease: "power2.inOut"
-      // })
 
       // ✅ Scene 4 Character Animation
       .to(char1AltRef.current, { opacity: 1, duration: 1.5 })
       .to(char1AltRef.current, {
-        x: isMobile ? 100 : 420, // More right for desktop
-        y: isMobile ? -90 : 40, // More upward for mobile
-        scale: 0.8, // Slight scale for depth effect
+        x: isMobile ? 100 : 420,
+        y: isMobile ? -90 : 40,
+        scale: 0.8,
         duration: 8,
         ease: "power2.inOut"
       })
 
+      // ✅ Scene 4 → Scene 5 (crossfade)
       .to([scene4Ref.current, char1AltRef.current], {
         opacity: 0,
         duration: 1.5
       })
-
-      .to(scene5Ref.current, { opacity: 1, duration: 1.5 })
+      .to(scene5Ref.current, { opacity: 1, duration: 1.5 }, "<0.5")
       .to(bubble2Ref.current, {
         opacity: 1,
         scale: 1,

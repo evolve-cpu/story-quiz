@@ -558,6 +558,203 @@
 //   );
 // }
 
+// import React, { useEffect, Suspense, useState } from "react";
+// import { QuizProvider, useQuiz } from "../../context/QuizContext";
+// import { useQuizProgress } from "../../hooks/useQuizProgress";
+// import QuizComplete from "./QuizComplete";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import { evolveLogo } from "../../assets/images/avatar";
+// import { Link } from "react-router-dom";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// // ✅ Lazy imports for modules
+// const Module1 = React.lazy(() => import("./modules/Module1"));
+// const Module2 = React.lazy(() => import("./modules/Module2"));
+// const Module3 = React.lazy(() => import("./modules/Module3"));
+// const Module4 = React.lazy(() => import("./modules/Module4"));
+// const Module5 = React.lazy(() => import("./modules/Module5"));
+// const Module6 = React.lazy(() => import("./modules/module6"));
+// const Module7 = React.lazy(() => import("./modules/Module7"));
+// const Module8 = React.lazy(() => import("./modules/Module8"));
+// const Module9 = React.lazy(() => import("./modules/Module9"));
+// const Module10 = React.lazy(() => import("./modules/Module10"));
+// const Module11 = React.lazy(() => import("./modules/Module11"));
+// const Module12 = React.lazy(() => import("./modules/Module12"));
+// const Module13 = React.lazy(() => import("./modules/Module13"));
+// const Module14 = React.lazy(() => import("./modules/Module14"));
+// const Module15 = React.lazy(() => import("./modules/Module15"));
+// const Module16 = React.lazy(() => import("./modules/Module16"));
+// const Module17 = React.lazy(() => import("./modules/Module17"));
+
+// function QuizContent() {
+//   const quiz = useQuizProgress();
+//   const { setLenisInstance } = useQuiz();
+
+//   if (!quiz) {
+//     console.error("useQuizProgress returned null");
+//     return null;
+//   }
+
+//   const { quizState } = quiz;
+//   if (!quizState) {
+//     console.error("quizState is undefined");
+//     return null;
+//   }
+
+//   const [loadedModules, setLoadedModules] = useState([1]); // Load only module 1 initially
+
+//   useEffect(() => {
+//     ScrollTrigger.refresh();
+//   }, []);
+
+//   useEffect(() => {
+//     if (quizState.isComplete) {
+//       console.log("QUIZ COMPLETE! Showing QuizComplete page...");
+//     }
+//   }, [quizState.isComplete]);
+
+//   // Dynamically load next modules when scrolling down
+//   const handleScroll = () => {
+//     const scrollY = window.scrollY;
+//     const windowHeight = window.innerHeight;
+//     const docHeight = document.body.scrollHeight;
+
+//     if (scrollY + windowHeight * 1.5 >= docHeight) {
+//       setLoadedModules((prev) => {
+//         const next = prev.length + 1;
+//         return next <= 17 && !prev.includes(next) ? [...prev, next] : prev;
+//       });
+//     }
+//   };
+
+//   useEffect(() => {
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   if (quizState.isComplete) {
+//     return <QuizComplete />;
+//   }
+
+//   return (
+//     <div className="relative bg-black min-h-[1000vh] overflow-x-hidden overflow-y-visible scrollbar-hide">
+//       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-40 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
+//       {/* ✅ Fixed Logo at top-left */}
+//       {/* ✅ Fixed Logo at top-left, clickable */}
+//       <Link to="/" className="fixed top-6 left-6 z-50">
+//         <img
+//           src={evolveLogo}
+//           alt="Evolve Logo"
+//           className="w-20 sm:w-28 h-auto cursor-pointer transition-transform hover:scale-105 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
+//         />
+//       </Link>
+
+//       <Suspense fallback={<div className="text-white p-10">Loading...</div>}>
+//         {loadedModules.includes(1) && (
+//           <div id="module-1">
+//             <Module1 />
+//           </div>
+//         )}
+//         {loadedModules.includes(2) && (
+//           <div id="module-2">
+//             <Module2 />
+//           </div>
+//         )}
+//         {loadedModules.includes(3) && (
+//           <div id="module-3">
+//             <Module3 />
+//           </div>
+//         )}
+//         {loadedModules.includes(4) && (
+//           <div id="module-4">
+//             <Module4 />
+//           </div>
+//         )}
+//         {loadedModules.includes(5) && (
+//           <div id="module-5">
+//             <Module5 />
+//           </div>
+//         )}
+//         {loadedModules.includes(6) && (
+//           <div id="module-6">
+//             <Module6 />
+//           </div>
+//         )}
+//         {loadedModules.includes(7) && (
+//           <div id="module-7">
+//             <Module7 />
+//           </div>
+//         )}
+//         {loadedModules.includes(8) && (
+//           <div id="module-8">
+//             <Module8 />
+//           </div>
+//         )}
+//         {loadedModules.includes(9) && (
+//           <div id="module-9">
+//             <Module9 />
+//           </div>
+//         )}
+//         {loadedModules.includes(10) && (
+//           <div id="module-10">
+//             <Module10 />
+//           </div>
+//         )}
+//         {loadedModules.includes(11) && (
+//           <div id="module-11">
+//             <Module11 />
+//           </div>
+//         )}
+//         {loadedModules.includes(12) && (
+//           <div id="module-12">
+//             <Module12 />
+//           </div>
+//         )}
+//         {loadedModules.includes(13) && (
+//           <div id="module-13">
+//             <Module13 />
+//           </div>
+//         )}
+//         {loadedModules.includes(14) && (
+//           <div id="module-14">
+//             <Module14 />
+//           </div>
+//         )}
+//         {loadedModules.includes(15) && (
+//           <div id="module-15">
+//             <Module15 />
+//           </div>
+//         )}
+//         {loadedModules.includes(16) && (
+//           <div id="module-16">
+//             <Module16 />
+//           </div>
+//         )}
+//         {loadedModules.includes(17) && (
+//           <div id="module-17">
+//             <Module17 />
+//           </div>
+//         )}
+//       </Suspense>
+//       {/* Gradient Overlays */}
+//       <div className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none">
+//         <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent" />
+//         <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/60 to-transparent" />
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default function QuizContainer() {
+//   return (
+//     <QuizProvider>
+//       <QuizContent />
+//     </QuizProvider>
+//   );
+// }
+
 import React, { useEffect, Suspense, useState } from "react";
 import { QuizProvider, useQuiz } from "../../context/QuizContext";
 import { useQuizProgress } from "../../hooks/useQuizProgress";
@@ -569,13 +766,13 @@ import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ✅ Lazy imports for modules
+// ✅ Correctly cased imports
 const Module1 = React.lazy(() => import("./modules/Module1"));
 const Module2 = React.lazy(() => import("./modules/Module2"));
 const Module3 = React.lazy(() => import("./modules/Module3"));
 const Module4 = React.lazy(() => import("./modules/Module4"));
 const Module5 = React.lazy(() => import("./modules/Module5"));
-const Module6 = React.lazy(() => import("./modules/module6"));
+const Module6 = React.lazy(() => import("./modules/Module6")); // ✅ FIXED case
 const Module7 = React.lazy(() => import("./modules/Module7"));
 const Module8 = React.lazy(() => import("./modules/Module8"));
 const Module9 = React.lazy(() => import("./modules/Module9"));
@@ -603,23 +800,26 @@ function QuizContent() {
     return null;
   }
 
-  const [loadedModules, setLoadedModules] = useState([1]); // Load only module 1 initially
+  const [loadedModules, setLoadedModules] = useState([1]); // start with Module 1
 
+  // ✅ ScrollTrigger initial refresh
   useEffect(() => {
     ScrollTrigger.refresh();
   }, []);
 
+  // ✅ Refresh GSAP whenever new modules are loaded
   useEffect(() => {
-    if (quizState.isComplete) {
-      console.log("QUIZ COMPLETE! Showing QuizComplete page...");
-    }
-  }, [quizState.isComplete]);
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh(); // ensures GSAP recalculates new heights
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [loadedModules]);
 
-  // Dynamically load next modules when scrolling down
+  // ✅ Load more modules dynamically when scrolling near bottom
   const handleScroll = () => {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
-    const docHeight = document.body.scrollHeight;
+    const docHeight = document.documentElement.scrollHeight;
 
     if (scrollY + windowHeight * 1.5 >= docHeight) {
       setLoadedModules((prev) => {
@@ -630,7 +830,7 @@ function QuizContent() {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -639,10 +839,13 @@ function QuizContent() {
   }
 
   return (
-    <div className="relative bg-black min-h-[1000vh] overflow-x-hidden overflow-y-visible scrollbar-hide">
+    <div className="relative bg-black overflow-x-hidden overflow-y-visible scrollbar-hide">
+      {/* ✅ Removed min-h-[1000vh] to allow natural content height */}
+
+      {/* Background Overlay */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-40 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
-      {/* ✅ Fixed Logo at top-left */}
-      {/* ✅ Fixed Logo at top-left, clickable */}
+
+      {/* Logo */}
       <Link to="/" className="fixed top-6 left-6 z-50">
         <img
           src={evolveLogo}
@@ -651,93 +854,37 @@ function QuizContent() {
         />
       </Link>
 
+      {/* ✅ Lazy Load Modules */}
       <Suspense fallback={<div className="text-white p-10">Loading...</div>}>
-        {loadedModules.includes(1) && (
-          <div id="module-1">
-            <Module1 />
-          </div>
-        )}
-        {loadedModules.includes(2) && (
-          <div id="module-2">
-            <Module2 />
-          </div>
-        )}
-        {loadedModules.includes(3) && (
-          <div id="module-3">
-            <Module3 />
-          </div>
-        )}
-        {loadedModules.includes(4) && (
-          <div id="module-4">
-            <Module4 />
-          </div>
-        )}
-        {loadedModules.includes(5) && (
-          <div id="module-5">
-            <Module5 />
-          </div>
-        )}
-        {loadedModules.includes(6) && (
-          <div id="module-6">
-            <Module6 />
-          </div>
-        )}
-        {loadedModules.includes(7) && (
-          <div id="module-7">
-            <Module7 />
-          </div>
-        )}
-        {loadedModules.includes(8) && (
-          <div id="module-8">
-            <Module8 />
-          </div>
-        )}
-        {loadedModules.includes(9) && (
-          <div id="module-9">
-            <Module9 />
-          </div>
-        )}
-        {loadedModules.includes(10) && (
-          <div id="module-10">
-            <Module10 />
-          </div>
-        )}
-        {loadedModules.includes(11) && (
-          <div id="module-11">
-            <Module11 />
-          </div>
-        )}
-        {loadedModules.includes(12) && (
-          <div id="module-12">
-            <Module12 />
-          </div>
-        )}
-        {loadedModules.includes(13) && (
-          <div id="module-13">
-            <Module13 />
-          </div>
-        )}
-        {loadedModules.includes(14) && (
-          <div id="module-14">
-            <Module14 />
-          </div>
-        )}
-        {loadedModules.includes(15) && (
-          <div id="module-15">
-            <Module15 />
-          </div>
-        )}
-        {loadedModules.includes(16) && (
-          <div id="module-16">
-            <Module16 />
-          </div>
-        )}
-        {loadedModules.includes(17) && (
-          <div id="module-17">
-            <Module17 />
-          </div>
-        )}
+        {loadedModules.map((index) => {
+          const ModuleComponent = {
+            1: Module1,
+            2: Module2,
+            3: Module3,
+            4: Module4,
+            5: Module5,
+            6: Module6,
+            7: Module7,
+            8: Module8,
+            9: Module9,
+            10: Module10,
+            11: Module11,
+            12: Module12,
+            13: Module13,
+            14: Module14,
+            15: Module15,
+            16: Module16,
+            17: Module17
+          }[index];
+
+          return (
+            <div key={index} id={`module-${index}`}>
+              <ModuleComponent />
+            </div>
+          );
+        })}
       </Suspense>
+
       {/* Gradient Overlays */}
       <div className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none">
         <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent" />

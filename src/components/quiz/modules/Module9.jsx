@@ -479,13 +479,80 @@ const Module9 = () => {
   const scene16Ref = useRef(null);
   const scene16TextRef = useRef(null);
 
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   // ✅ Instantly show Scene 14 and tooltip
+  //   gsap.set([scene14Ref.current, scene14TextRef.current], { opacity: 1 });
+
+  //   // Other scenes stay hidden initially
+  //   gsap.set(
+  //     [
+  //       scene15Ref.current,
+  //       scene15TextRef.current,
+  //       scene16Ref.current,
+  //       scene16TextRef.current
+  //     ],
+  //     { opacity: 0 }
+  //   );
+
+  //   const tl9 = gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: containerRef9.current,
+  //       start: "top top",
+  //       end: "+=3000",
+  //       scrub: 1.5,
+  //       pin: true,
+  //       anticipatePin: 1,
+  //       markers: false
+  //     }
+  //   });
+
+  //   // Hide Scene 14 tooltip before transition
+  //   tl9.to(scene14TextRef.current, { opacity: 0, duration: 1 }, "+=1");
+
+  //   // Smooth crossfade Scene 14 → Scene 15
+  //   tl9.to(scene14Ref.current, {
+  //     opacity: 0,
+  //     duration: 0.8,
+  //     ease: "power2.inOut"
+  //   });
+  //   tl9.to(
+  //     scene15Ref.current,
+  //     { opacity: 1, duration: 0.8, ease: "power2.inOut" },
+  //     "<0.4"
+  //   );
+
+  //   // Scene 15 Tooltip
+  //   tl9.to(scene15TextRef.current, { opacity: 1, duration: 0.6 }, "<0.2");
+  //   tl9.to(scene15TextRef.current, { opacity: 0, duration: 1 }, "+=1");
+
+  //   // Scene 15 → Scene 16
+  //   tl9.to(
+  //     scene15Ref.current,
+  //     { opacity: 0, duration: 1.2, ease: "power2.inOut" },
+  //     "<0.2"
+  //   );
+  //   tl9.to(
+  //     scene16Ref.current,
+  //     { opacity: 1, duration: 1.5, ease: "power2.inOut" },
+  //     "<0.2"
+  //   );
+  //   tl9.to(scene16TextRef.current, { opacity: 1, duration: 1 }, "<0.5");
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((t) => {
+  //       if (t.trigger === containerRef9.current) t.kill();
+  //     });
+  //     tl9.kill();
+  //   };
+  // }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // ✅ Instantly show Scene 14 and tooltip
+    // Initial states
     gsap.set([scene14Ref.current, scene14TextRef.current], { opacity: 1 });
-
-    // Other scenes stay hidden initially
     gsap.set(
       [
         scene15Ref.current,
@@ -508,37 +575,35 @@ const Module9 = () => {
       }
     });
 
-    // Hide Scene 14 tooltip before transition
-    tl9.to(scene14TextRef.current, { opacity: 0, duration: 1 }, "+=1");
+    // === Scene14 → Scene15 Crossfade ===
+    tl9
+      .to(scene14TextRef.current, { opacity: 0, duration: 0.6 })
+      .to(scene14Ref.current, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.inOut"
+      })
+      .to(
+        scene15Ref.current,
+        { opacity: 1, duration: 1, ease: "power2.inOut" },
+        "<0.4"
+      )
+      .to(scene15TextRef.current, { opacity: 1, duration: 0.6 }, "<0.3")
+      .to(scene15TextRef.current, { opacity: 0, duration: 0.8 }, "+=1");
 
-    // Smooth crossfade Scene 14 → Scene 15
-    tl9.to(scene14Ref.current, {
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.inOut"
-    });
-    tl9.to(
-      scene15Ref.current,
-      { opacity: 1, duration: 0.8, ease: "power2.inOut" },
-      "<0.4"
-    );
-
-    // Scene 15 Tooltip
-    tl9.to(scene15TextRef.current, { opacity: 1, duration: 0.6 }, "<0.2");
-    tl9.to(scene15TextRef.current, { opacity: 0, duration: 1 }, "+=1");
-
-    // Scene 15 → Scene 16
-    tl9.to(
-      scene15Ref.current,
-      { opacity: 0, duration: 1.2, ease: "power2.inOut" },
-      "<0.2"
-    );
-    tl9.to(
-      scene16Ref.current,
-      { opacity: 1, duration: 1.5, ease: "power2.inOut" },
-      "<0.2"
-    );
-    tl9.to(scene16TextRef.current, { opacity: 1, duration: 1 }, "<0.5");
+    // === Scene15 → Scene16 Crossfade ===
+    tl9
+      .to(
+        scene15Ref.current,
+        { opacity: 0, duration: 1, ease: "power2.inOut" },
+        "<0.2"
+      )
+      .to(
+        scene16Ref.current,
+        { opacity: 1, duration: 1.2, ease: "power2.inOut" },
+        "<0.3"
+      )
+      .to(scene16TextRef.current, { opacity: 1, duration: 0.8 }, "<0.5");
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => {

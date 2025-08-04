@@ -1691,6 +1691,72 @@ const Module3 = () => {
   const scene8CharRef = useRef(null);
   const scene8TextRef = useRef(null);
 
+  // useEffect(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   // Reset opacity
+  //   gsap.set(
+  //     [
+  //       scene7Ref.current,
+  //       charRef.current,
+  //       scene7TextRef.current,
+  //       scene8BgRef.current,
+  //       scene8CharRef.current,
+  //       scene8TextRef.current
+  //     ],
+  //     { opacity: 0 }
+  //   );
+
+  //   // Timeline attached to ScrollTrigger
+  //   const tl = gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: containerRef.current,
+  //       start: "top top",
+  //       end: "+=3000", // Manually guessed scroll distance
+  //       scrub: 1.5,
+  //       pin: true,
+  //       anticipatePin: 1,
+  //       markers: false
+  //     }
+  //   });
+
+  //   // --- Scene 7 ---
+  //   tl.set(scene7Ref.current, { opacity: 1 })
+  //     .set(charRef.current, {
+  //       opacity: 1,
+  //       x: 0,
+  //       y: 0,
+  //       scale: isMobile ? 0.9 : 1,
+  //       bottom: isMobile ? "50px" : "-4px",
+  //       left: isMobile ? "5%" : "2.5rem"
+  //     })
+  //     .to(charRef.current, {
+  //       x: isMobile ? 80 : 200,
+  //       y: isMobile ? 5 : 10,
+  //       scale: isMobile ? 0.8 : 0.8,
+  //       duration: isMobile ? 3 : 5,
+  //       ease: "power2.inOut"
+  //     })
+  //     .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
+  //     .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
+  //     .to([scene7Ref.current, charRef.current], { opacity: 0, duration: 1 })
+
+  //     // --- Scene 8 ---
+  //     .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 })
+  //     .set(scene8TextRef.current, { opacity: 1 })
+  //     .to(scene8BgRef.current, {
+  //       x: isMobile ? "15%" : "30%",
+  //       duration: isMobile ? 1.5 : 2,
+  //       ease: "power2.inOut"
+  //     })
+  //     .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1");
+
+  //   return () => {
+  //     if (tl.scrollTrigger) tl.scrollTrigger.kill();
+  //     tl.kill();
+  //   };
+  // }, []);
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -1707,12 +1773,11 @@ const Module3 = () => {
       { opacity: 0 }
     );
 
-    // Timeline attached to ScrollTrigger
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=3000", // Manually guessed scroll distance
+        end: "+=3000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -1739,11 +1804,21 @@ const Module3 = () => {
       })
       .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
       .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
-      .to([scene7Ref.current, charRef.current], { opacity: 0, duration: 1 })
 
-      // --- Scene 8 ---
-      .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 })
-      .set(scene8TextRef.current, { opacity: 1 })
+      // ✅ Crossfade Scene 7 → Scene 8
+      .to(
+        [scene7Ref.current, charRef.current],
+        { opacity: 0, duration: 1 },
+        "+=0"
+      )
+      .to(
+        [scene8BgRef.current, scene8CharRef.current],
+        { opacity: 1, duration: 1.2 },
+        "<0.3"
+      )
+      .to(scene8TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
+
+      // --- Scene 8 Animations ---
       .to(scene8BgRef.current, {
         x: isMobile ? "15%" : "30%",
         duration: isMobile ? 1.5 : 2,

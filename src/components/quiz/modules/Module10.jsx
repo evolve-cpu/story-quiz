@@ -34,6 +34,49 @@ const Module10 = () => {
     window.removeEventListener("touchmove", preventDefault);
   };
 
+  // useEffect(() => {
+  //   const tl = gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: containerRef.current,
+  //       start: "top top",
+  //       end: "+=2000",
+  //       scrub: 1.5,
+  //       pin: true,
+  //       anticipatePin: 1,
+  //       markers: false
+  //     }
+  //   });
+
+  //   // Fade-in and zoom-in transition
+  //   tl.fromTo(
+  //     sceneRef.current,
+  //     { opacity: 0, scale: 1 },
+  //     { opacity: 1, scale: 1.05, duration: 1.5 }
+  //   );
+  //   tl.to(sceneRef.current, { scale: 1.1, duration: 1.5 });
+
+  //   tl.call(() => {
+  //     if (!quizCompleted) {
+  //       setShowQuiz(true);
+  //       disableScrollEvents();
+  //       tl.pause();
+  //     }
+  //   });
+
+  //   // Fade out after quiz is completed
+  //   tl.to(sceneRef.current, { opacity: 0, scale: 1.15, duration: 1 });
+
+  //   return () => {
+  //     ScrollTrigger.getAll().forEach((trigger) => {
+  //       if (trigger.trigger === containerRef.current) {
+  //         trigger.kill();
+  //       }
+  //     });
+  //     tl.kill();
+  //     enableScrollEvents();
+  //   };
+  // }, [quizCompleted]);
+
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -47,14 +90,13 @@ const Module10 = () => {
       }
     });
 
-    // Fade-in and zoom-in transition
-    tl.fromTo(
-      sceneRef.current,
-      { opacity: 0, scale: 1 },
-      { opacity: 1, scale: 1.05, duration: 1.5 }
-    );
+    // ✅ Scene is instantly visible (no fade-in / zoom intro)
+    gsap.set(sceneRef.current, { opacity: 1, scale: 1 });
+
+    // Slight zoom during scroll
     tl.to(sceneRef.current, { scale: 1.1, duration: 1.5 });
 
+    // Pause timeline to show quiz modal
     tl.call(() => {
       if (!quizCompleted) {
         setShowQuiz(true);
@@ -63,14 +105,12 @@ const Module10 = () => {
       }
     });
 
-    // Fade out after quiz is completed
-    tl.to(sceneRef.current, { opacity: 0, scale: 1.15, duration: 1 });
+    // ✅ Removed outro fade-out animation
+    // (Scene stays visible after quiz closes)
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.trigger === containerRef.current) {
-          trigger.kill();
-        }
+        if (trigger.trigger === containerRef.current) trigger.kill();
       });
       tl.kill();
       enableScrollEvents();

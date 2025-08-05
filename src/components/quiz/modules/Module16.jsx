@@ -255,7 +255,7 @@ const Module16 = () => {
           isVisible={showQuiz}
           onClose={handleQuiz8Close}
           questionId="scene24_q1"
-          question="What makes a calculator layout more usable, especially in stressful moments? (Multiple Choice)"
+          question="What makes a calculator layout more usable, especially in stressful moments?"
           options={[
             "1. Brightly coloured buttons with random shapes",
             "2. All buttons the same size in a uniform grid",

@@ -42,7 +42,7 @@ const Module12 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=3000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -110,7 +110,7 @@ const Module12 = () => {
           isVisible={showQuiz}
           onClose={handleQuiz6Close}
           questionId="scene20_q1"
-          question="What design features make medical scissors more efficient than regular ones? (Select All That Apply)"
+          question="What design features make medical scissors more efficient than regular ones?"
           options={[
             "1. Curved blades that reduce drag while cutting",
             "2. Non-stick coating to prevent adhesive buildup",

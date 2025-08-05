@@ -368,15 +368,15 @@ const Module4 = () => {
     setQuiz2Completed(true);
     enableScrollEvents();
 
-    const trigger = ScrollTrigger.getAll().find(
-      (t) => t.trigger === containerRef.current
-    );
-    if (trigger) {
-      const timeline = trigger.animation; // get gsap timeline
-      if (timeline) {
-        timeline.play(timeline.duration()); // jump to end
-      }
-    }
+    // const trigger = ScrollTrigger.getAll().find(
+    //   (t) => t.trigger === containerRef.current
+    // );
+    // if (trigger) {
+    //   const timeline = trigger.animation; // get gsap timeline
+    //   if (timeline) {
+    //     timeline.play(timeline.duration()); // jump to end
+    //   }
+    // }
   };
 
   return (

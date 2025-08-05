@@ -26,18 +26,21 @@
 // }
 
 // useScrollLock.js
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
-export const useScrollLock = (lock = false) => {
-  useEffect(() => {
-    if (lock) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+// export const useScrollLock = (lock = false) => {
+//   useEffect(() => {
+//     if (lock) {
+//       document.body.style.overflow = "hidden";
+//     } else {
+//       document.body.style.overflow = "";
+//     }
 
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [lock]);
-};
+//     return () => {
+//       document.body.style.overflow = "";
+//     };
+//   }, [lock]);
+// };
+
+export const lockScroll = () => document.body.classList.add("no-scroll");
+export const unlockScroll = () => document.body.classList.remove("no-scroll");

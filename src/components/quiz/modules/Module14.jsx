@@ -113,7 +113,7 @@ const Module14 = () => {
           isVisible={showQuiz}
           onClose={handleQuiz7Close}
           questionId="scene22_q1"
-          question="Phones always have rounded corners. Is that just for looks? (Select All That Apply)"
+          question="Phones always have rounded corners. Is that just for looks?"
           options={[
             "1. Rounder corners are less likely to chip or break",
             "2. Rounder corners are more comfortable to hold",

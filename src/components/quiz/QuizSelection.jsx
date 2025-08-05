@@ -1042,7 +1042,7 @@ const QuizSelection = () => {
                 unseen
               </h2>
               <p className="text-[14px] sm:text-[32px] text-white text-center mb-3 sm:mb-[10rem]">
-                discover the logic behind the ordinary
+                discover the logic behind <br /> the ordinary
               </p>
               <div className="w-fit mx-auto bg-white rounded-md transition-all duration-300 active:scale-90 sm:-mt-24 sm:transform sm:-translate-y-8">
                 <button

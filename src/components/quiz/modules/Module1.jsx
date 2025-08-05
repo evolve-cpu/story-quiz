@@ -1136,6 +1136,7 @@ const Module1 = () => {
   const bubble2Ref = useRef(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -1144,6 +1145,7 @@ const Module1 = () => {
   }, []);
 
   useEffect(() => {
+    if (isLoading) return; // ✅ Run animations only when image is loaded
     gsap.set(
       [
         headingRef.current,
@@ -1179,7 +1181,7 @@ const Module1 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=7000",
+        end: "+=6000",
         scrub: 1.6,
         pin: true,
         anticipatePin: 1,
@@ -1277,38 +1279,31 @@ const Module1 = () => {
       })
 
       // ✅ Scene 4 → Scene 5 (crossfade)
+      .to([scene4Ref.current, char1AltRef.current], {
+        opacity: 0,
+        duration: 1.5
+      })
+      .to(scene5Ref.current, { opacity: 1, duration: 1.5 }, "<0.5")
+      .to(bubble2Ref.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "back.out(1.7)"
+      })
+      // Fade out Scene 4 and fade in Scene 5
       // .to([scene4Ref.current, char1AltRef.current], {
       //   opacity: 0,
-      //   duration: 1.5
-      // })
-      // .to(scene5Ref.current, { opacity: 1, duration: 1.5 }, "<0.5")
-      // .to(bubble2Ref.current, {
-      //   opacity: 1,
-      //   scale: 1,
       //   duration: 1,
-      //   ease: "back.out(1.7)"
-      // });
-      // ✅ Scene 4 → Scene 5 (wait until char finishes)
-      .to(
-        scene5Ref.current,
-        {
-          opacity: 1,
-          duration: 1.5,
-          ease: "power2.inOut"
-        },
-        "+=0"
-      ) // starts right after character animation finishes
-      .to(
-        [scene4Ref.current, char1AltRef.current],
-        {
-          opacity: 0,
-          duration: 1.5,
-          ease: "power2.inOut"
-        },
-        "<"
-      ) // overlap, no black frame
-
-      // ✅ Bubble appears after crossfade
+      //   ease: "power2.inOut"
+      // })
+      // .to(scene5Ref.current, {
+      //   opacity: 1,
+      //   duration: 1,
+      //   ease: "power2.inOut",
+      //   onComplete: () => {
+      //     gsap.set(scene5Ref.current, { opacity: 1 }); // hold Scene 5 visible
+      //   }
+      // })
       .to(
         bubble2Ref.current,
         {
@@ -1324,16 +1319,20 @@ const Module1 = () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       masterTl.kill();
     };
-  }, []);
+  }, [isLoading]);
 
   return (
     // <div
     //   ref={containerRef}
     //   className="w-screen h-screen overflow-hidden text-white lowercase relative bg-black"
     // >
+    // <div
+    //   ref={containerRef}
+    //   className="w-screen h-screen max-w-[100vw] max-h-[100vh] overflow-hidden text-white lowercase relative bg-black"
+    // >
     <div
       ref={containerRef}
-      className="w-screen h-screen max-w-[100vw] max-h-[100vh] overflow-hidden text-white lowercase relative bg-black"
+      className="w-screen min-h-screen max-w-[100vw] overflow-hidden text-white lowercase relative bg-black"
     >
       {/* INTRO SCENE */}
       <div className="absolute w-full h-full px-4 flex flex-col items-center justify-center z-10">
@@ -1361,6 +1360,7 @@ const Module1 = () => {
             src={story_intro}
             alt="Intro"
             className="mx-auto rounded-xl w-full h-auto object-cover" // full width image
+            onLoad={() => setIsLoading(false)}
           />
         </div>
         {/* ✅ Add spacing below the box */}

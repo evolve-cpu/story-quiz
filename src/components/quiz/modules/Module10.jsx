@@ -82,7 +82,7 @@ const Module10 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=3000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -107,6 +107,7 @@ const Module10 = () => {
 
     // ✅ Removed outro fade-out animation
     // (Scene stays visible after quiz closes)
+    tl.to(sceneRef.current, { opacity: 0, scale: 1.1, duration: 1 });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {

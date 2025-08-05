@@ -604,7 +604,7 @@ const Module6 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=5000",
+        end: "+=4000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -632,10 +632,16 @@ const Module6 = () => {
     tl.set([bgRef.current, charRef.current], {
       clearProps: "opacity"
     });
+    // tl.to([bgRef.current, charRef.current], {
+    //   opacity: 0,
+    //   duration: 1,
+    //   ease: "power3.inOut"
+    // });
+
     tl.to([bgRef.current, charRef.current], {
       opacity: 0,
-      duration: 1,
-      ease: "power3.inOut"
+      duration: 1.5,
+      ease: "power4.inOut"
     });
 
     return () => {

@@ -372,7 +372,7 @@ const Module7 = () => {
     // === Scene 12 ===
     tl.to([scene12Ref.current, scene12TextRef.current], {
       opacity: 1,
-      duration: 0.3, // quick fade-in
+      duration: 1, // quick fade-in
       ease: "none"
     })
       .to(scene12Ref.current, {

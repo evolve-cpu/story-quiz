@@ -1666,6 +1666,253 @@
 
 // export default Module3;
 
+// import React, { useEffect, useRef } from "react";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// import {
+//   story_scene_7,
+//   story_scene_7_mobile,
+//   char_1_1,
+//   story_scene_8_char,
+//   story_scene_8_char_mobile,
+//   story_scene_8_bg_1,
+//   story_scene_8_bg_mobile
+// } from "../../../assets/images/avatar";
+
+// const Module3 = () => {
+//   const containerRef = useRef(null);
+//   const isMobile = window.innerWidth <= 768;
+
+//   const scene7Ref = useRef(null);
+//   const charRef = useRef(null);
+//   const scene7TextRef = useRef(null);
+//   const scene8BgRef = useRef(null);
+//   const scene8CharRef = useRef(null);
+//   const scene8TextRef = useRef(null);
+
+//   // useEffect(() => {
+//   //   gsap.registerPlugin(ScrollTrigger);
+
+//   //   // Reset opacity
+//   //   gsap.set(
+//   //     [
+//   //       scene7Ref.current,
+//   //       charRef.current,
+//   //       scene7TextRef.current,
+//   //       scene8BgRef.current,
+//   //       scene8CharRef.current,
+//   //       scene8TextRef.current
+//   //     ],
+//   //     { opacity: 0 }
+//   //   );
+
+//   //   // Timeline attached to ScrollTrigger
+//   //   const tl = gsap.timeline({
+//   //     scrollTrigger: {
+//   //       trigger: containerRef.current,
+//   //       start: "top top",
+//   //       end: "+=3000", // Manually guessed scroll distance
+//   //       scrub: 1.5,
+//   //       pin: true,
+//   //       anticipatePin: 1,
+//   //       markers: false
+//   //     }
+//   //   });
+
+//   //   // --- Scene 7 ---
+//   //   tl.set(scene7Ref.current, { opacity: 1 })
+//   //     .set(charRef.current, {
+//   //       opacity: 1,
+//   //       x: 0,
+//   //       y: 0,
+//   //       scale: isMobile ? 0.9 : 1,
+//   //       bottom: isMobile ? "50px" : "-4px",
+//   //       left: isMobile ? "5%" : "2.5rem"
+//   //     })
+//   //     .to(charRef.current, {
+//   //       x: isMobile ? 80 : 200,
+//   //       y: isMobile ? 5 : 10,
+//   //       scale: isMobile ? 0.8 : 0.8,
+//   //       duration: isMobile ? 3 : 5,
+//   //       ease: "power2.inOut"
+//   //     })
+//   //     .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
+//   //     .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
+//   //     .to([scene7Ref.current, charRef.current], { opacity: 0, duration: 1 })
+
+//   //     // --- Scene 8 ---
+//   //     .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 })
+//   //     .set(scene8TextRef.current, { opacity: 1 })
+//   //     .to(scene8BgRef.current, {
+//   //       x: isMobile ? "15%" : "30%",
+//   //       duration: isMobile ? 1.5 : 2,
+//   //       ease: "power2.inOut"
+//   //     })
+//   //     .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1");
+
+//   //   return () => {
+//   //     if (tl.scrollTrigger) tl.scrollTrigger.kill();
+//   //     tl.kill();
+//   //   };
+//   // }, []);
+
+//   useEffect(() => {
+//     gsap.registerPlugin(ScrollTrigger);
+
+//     ScrollTrigger.refresh();
+
+//     // Reset opacity
+//     gsap.set(
+//       [
+//         scene7Ref.current,
+//         charRef.current,
+//         scene7TextRef.current,
+//         scene8BgRef.current,
+//         scene8CharRef.current,
+//         scene8TextRef.current
+//       ],
+//       { opacity: 0 }
+//     );
+
+//     const tl = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: containerRef.current,
+//         start: "top top",
+//         end: "+=3000",
+//         scrub: 2,
+//         pin: true,
+//         anticipatePin: 1,
+//         markers: false
+//       }
+//     });
+
+//     // --- Scene 7 ---
+//     tl.set(scene7Ref.current, { opacity: 1 })
+//       .set(charRef.current, {
+//         opacity: 1,
+//         x: 0,
+//         y: 0,
+//         scale: isMobile ? 0.9 : 1,
+//         bottom: isMobile ? "50px" : "-4px",
+//         left: isMobile ? "5%" : "2.5rem"
+//       })
+//       .to(charRef.current, {
+//         x: isMobile ? 80 : 200,
+//         y: isMobile ? 5 : 10,
+//         scale: isMobile ? 0.8 : 0.8,
+//         duration: isMobile ? 3 : 5,
+//         ease: "power2.inOut"
+//       })
+//       .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
+//       .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
+
+//       // ✅ Crossfade Scene 7 → Scene 8
+//       .to(
+//         [scene7Ref.current, charRef.current],
+//         { opacity: 0, duration: 1 },
+//         "+=0"
+//       )
+//       .to(
+//         [scene8BgRef.current, scene8CharRef.current],
+//         { opacity: 1, duration: 1.2 },
+//         "<0.3"
+//       )
+//       .to(scene8TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
+
+//       // --- Scene 8 Animations ---
+//       .to(scene8BgRef.current, {
+//         x: isMobile ? "15%" : "30%",
+//         duration: isMobile ? 1.5 : 2,
+//         ease: "power2.inOut"
+//       })
+//       // ✅ Only fade out the text, keep BG & Char visible
+//       .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1")
+
+//       // ✅ Keep Scene8 visible until ScrollTrigger ends
+//       .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 });
+
+//     return () => {
+//       if (tl.scrollTrigger) tl.scrollTrigger.kill();
+//       tl.kill();
+//     };
+//   }, []);
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       id="module-3"
+//       className="relative w-full h-screen text-white lowercase bg-black"
+//     >
+//       {/* Scene 7 */}
+//       <div
+//         ref={scene7Ref}
+//         className="absolute top-0 left-0 w-full h-full z-20 flex items-center justify-center opacity-0"
+//       >
+//         <img
+//           src={isMobile ? story_scene_7_mobile : story_scene_7}
+//           alt="Scene 7"
+//           className={`w-full ${isMobile ? "" : "scale-y-[70%]"} object-contain`}
+//         />
+//         <img
+//           ref={charRef}
+//           src={char_1_1}
+//           alt="Char Alt"
+//           className={`absolute object-contain opacity-0 z-30 ${
+//             isMobile ? "w-[300px] h-[300px]" : "w-[650px] h-[650px]"
+//           }`}
+//         />
+//         <div
+//           ref={scene7TextRef}
+//           className={`absolute bottom-6 left-5 z-40 opacity-0 ${
+//             isMobile ? "text-sm p-2" : ""
+//           }`}
+//         >
+//           <div className="bg-black/80 text-white p-4 rounded-md w-fit">
+//             <p>Gibbo walking toward his car in the parking</p>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Scene 8 */}
+//       <div className="absolute top-0 left-0 w-full h-full z-30 flex items-center justify-center overflow-visible pointer-events-none">
+//         <img
+//           ref={scene8BgRef}
+//           src={isMobile ? story_scene_8_bg_mobile : story_scene_8_bg_1}
+//           alt="Scene 8 BG"
+//           className={`absolute object-contain opacity-0 ${
+//             isMobile
+//               ? "scale-x-[150%] scale-y-[120%]"
+//               : "scale-x-[180%] scale-y-[150%]"
+//           }`}
+//           style={{ right: 0 }}
+//         />
+//         <img
+//           ref={scene8CharRef}
+//           src={isMobile ? story_scene_8_char_mobile : story_scene_8_char}
+//           alt="Scene 8 Char"
+//           className={`absolute object-fill opacity-0 ${
+//             isMobile ? "bottom-0" : ""
+//           }`}
+//           style={isMobile ? { width: "auto", height: "auto" } : {}}
+//         />
+//         <div
+//           ref={scene8TextRef}
+//           className={`absolute bottom-6 left-6 z-40 opacity-0 pointer-events-none ${
+//             isMobile ? "text-sm p-2" : ""
+//           }`}
+//         >
+//           <div className="bg-black/80 text-white p-4 rounded-md w-fit">
+//             <p>Gibbo sits in the car and gets moving.</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Module3;
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -1680,6 +1927,8 @@ import {
   story_scene_8_bg_mobile
 } from "../../../assets/images/avatar";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Module3 = () => {
   const containerRef = useRef(null);
   const isMobile = window.innerWidth <= 768;
@@ -1691,78 +1940,8 @@ const Module3 = () => {
   const scene8CharRef = useRef(null);
   const scene8TextRef = useRef(null);
 
-  // useEffect(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-
-  //   // Reset opacity
-  //   gsap.set(
-  //     [
-  //       scene7Ref.current,
-  //       charRef.current,
-  //       scene7TextRef.current,
-  //       scene8BgRef.current,
-  //       scene8CharRef.current,
-  //       scene8TextRef.current
-  //     ],
-  //     { opacity: 0 }
-  //   );
-
-  //   // Timeline attached to ScrollTrigger
-  //   const tl = gsap.timeline({
-  //     scrollTrigger: {
-  //       trigger: containerRef.current,
-  //       start: "top top",
-  //       end: "+=3000", // Manually guessed scroll distance
-  //       scrub: 1.5,
-  //       pin: true,
-  //       anticipatePin: 1,
-  //       markers: false
-  //     }
-  //   });
-
-  //   // --- Scene 7 ---
-  //   tl.set(scene7Ref.current, { opacity: 1 })
-  //     .set(charRef.current, {
-  //       opacity: 1,
-  //       x: 0,
-  //       y: 0,
-  //       scale: isMobile ? 0.9 : 1,
-  //       bottom: isMobile ? "50px" : "-4px",
-  //       left: isMobile ? "5%" : "2.5rem"
-  //     })
-  //     .to(charRef.current, {
-  //       x: isMobile ? 80 : 200,
-  //       y: isMobile ? 5 : 10,
-  //       scale: isMobile ? 0.8 : 0.8,
-  //       duration: isMobile ? 3 : 5,
-  //       ease: "power2.inOut"
-  //     })
-  //     .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
-  //     .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
-  //     .to([scene7Ref.current, charRef.current], { opacity: 0, duration: 1 })
-
-  //     // --- Scene 8 ---
-  //     .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 })
-  //     .set(scene8TextRef.current, { opacity: 1 })
-  //     .to(scene8BgRef.current, {
-  //       x: isMobile ? "15%" : "30%",
-  //       duration: isMobile ? 1.5 : 2,
-  //       ease: "power2.inOut"
-  //     })
-  //     .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1");
-
-  //   return () => {
-  //     if (tl.scrollTrigger) tl.scrollTrigger.kill();
-  //     tl.kill();
-  //   };
-  // }, []);
-
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    ScrollTrigger.refresh();
-
-    // Reset opacity
+    // Reset initial states
     gsap.set(
       [
         scene7Ref.current,
@@ -1787,7 +1966,7 @@ const Module3 = () => {
       }
     });
 
-    // --- Scene 7 ---
+    // --- Scene 7 Animation ---
     tl.set(scene7Ref.current, { opacity: 1 })
       .set(charRef.current, {
         opacity: 1,
@@ -1800,40 +1979,36 @@ const Module3 = () => {
       .to(charRef.current, {
         x: isMobile ? 80 : 200,
         y: isMobile ? 5 : 10,
-        scale: isMobile ? 0.8 : 0.8,
-        duration: isMobile ? 3 : 5,
+        scale: 0.8,
+        duration: isMobile ? 2.5 : 4,
         ease: "power2.inOut"
       })
-      .to(scene7TextRef.current, { opacity: 1, duration: 0.01 }, "<")
-      .to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=1")
+      .to(scene7TextRef.current, { opacity: 1, duration: 0.5 }, "<")
+      .to(scene7TextRef.current, { opacity: 0, duration: 0.7 }, "+=1")
+      .to([scene7Ref.current, charRef.current], { opacity: 0, duration: 1 });
 
-      // ✅ Crossfade Scene 7 → Scene 8
-      .to(
-        [scene7Ref.current, charRef.current],
-        { opacity: 0, duration: 1 },
-        "+=0"
-      )
-      .to(
-        [scene8BgRef.current, scene8CharRef.current],
-        { opacity: 1, duration: 1.2 },
-        "<0.3"
-      )
-      .to(scene8TextRef.current, { opacity: 1, duration: 1 }, "<0.5")
-
-      // --- Scene 8 Animations ---
+    // --- Scene 8 Animation ---
+    tl.to(
+      [scene8BgRef.current, scene8CharRef.current],
+      { opacity: 1, duration: 1.2 },
+      "<0.3"
+    )
+      .to(scene8TextRef.current, { opacity: 1, duration: 0.5 }, "<0.3")
       .to(scene8BgRef.current, {
         x: isMobile ? "15%" : "30%",
         duration: isMobile ? 1.5 : 2,
         ease: "power2.inOut"
       })
-      // ✅ Only fade out the text, keep BG & Char visible
       .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1")
+      .to(
+        [scene8BgRef.current, scene8CharRef.current],
+        { opacity: 0.8, duration: 0.5 },
+        "+=0.3"
+      ); // ✅ fade slightly at end
 
-      // ✅ Keep Scene8 visible until ScrollTrigger ends
-      .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 });
-
+    // ✅ Cleanup
     return () => {
-      if (tl.scrollTrigger) tl.scrollTrigger.kill();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
       tl.kill();
     };
   }, []);
@@ -1891,10 +2066,7 @@ const Module3 = () => {
           ref={scene8CharRef}
           src={isMobile ? story_scene_8_char_mobile : story_scene_8_char}
           alt="Scene 8 Char"
-          className={`absolute object-fill opacity-0 ${
-            isMobile ? "bottom-0" : ""
-          }`}
-          style={isMobile ? { width: "auto", height: "auto" } : {}}
+          className="absolute object-fill opacity-0"
         />
         <div
           ref={scene8TextRef}

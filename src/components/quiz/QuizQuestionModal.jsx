@@ -701,6 +701,11 @@ const QuizQuestionModal = ({
       }}
     >
       <div className="bg-black border border-evolve-inchworm rounded-xl p-4 sm:p-6 w-full max-w-md z-[10000]">
+        {type === "multi" && (
+          <div className="text-yellow-400 text-center text-sm sm:text-base font-semibold mb-2 uppercase tracking-wide">
+            🔸 Select all that apply 🔸
+          </div>
+        )}
         <h2 className="text-white text-base sm:text-xl font-bold mb-3 lowercase sm:mb-4 leading-snug sm:leading-normal">
           {question}
         </h2>

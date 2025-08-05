@@ -627,10 +627,10 @@ function QuizContent() {
     const windowHeight = window.innerHeight;
     const docHeight = document.body.scrollHeight;
 
-    if (scrollY + windowHeight * 1.5 >= docHeight) {
+    if (scrollY + windowHeight * 2 >= docHeight) {
       setLoadedModules((prev) => {
         const next = prev.length + 1;
-        return next <= 17 && !prev.includes(next) ? [...prev, next] : prev;
+        return next <= 16 && !prev.includes(next) ? [...prev, next] : prev;
       });
     }
   };
@@ -640,19 +640,19 @@ function QuizContent() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (loadedModules.includes(3)) {
-      // ✅ when Module3 is added to DOM, recalc GSAP
-      setTimeout(() => ScrollTrigger.refresh(), 100);
-    }
-  }, [loadedModules]);
+  // useEffect(() => {
+  //   if (loadedModules.includes(3)) {
+  //     // ✅ when Module3 is added to DOM, recalc GSAP
+  //     setTimeout(() => ScrollTrigger.refresh(), 100);
+  //   }
+  // }, [loadedModules]);
 
   if (quizState.isComplete) {
     return <QuizComplete />;
   }
 
   return (
-    <div className="relative bg-black min-h-[1000vh] overflow-x-hidden overflow-y-visible scrollbar-hide">
+    <div className="relative bg-black  overflow-x-hidden overflow-y-visible scrollbar-hide">
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-40 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
       {/* ✅ Fixed Logo at top-left */}
       {/* ✅ Fixed Logo at top-left, clickable */}

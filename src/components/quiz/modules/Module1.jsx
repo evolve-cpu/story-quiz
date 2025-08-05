@@ -1179,7 +1179,7 @@ const Module1 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=6000",
+        end: "+=7000",
         scrub: 1.6,
         pin: true,
         anticipatePin: 1,

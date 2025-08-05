@@ -1277,17 +1277,48 @@ const Module1 = () => {
       })
 
       // ✅ Scene 4 → Scene 5 (crossfade)
-      .to([scene4Ref.current, char1AltRef.current], {
-        opacity: 0,
-        duration: 1.5
-      })
-      .to(scene5Ref.current, { opacity: 1, duration: 1.5 }, "<0.5")
-      .to(bubble2Ref.current, {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: "back.out(1.7)"
-      });
+      // .to([scene4Ref.current, char1AltRef.current], {
+      //   opacity: 0,
+      //   duration: 1.5
+      // })
+      // .to(scene5Ref.current, { opacity: 1, duration: 1.5 }, "<0.5")
+      // .to(bubble2Ref.current, {
+      //   opacity: 1,
+      //   scale: 1,
+      //   duration: 1,
+      //   ease: "back.out(1.7)"
+      // });
+      // ✅ Scene 4 → Scene 5 (wait until char finishes)
+      .to(
+        scene5Ref.current,
+        {
+          opacity: 1,
+          duration: 1.5,
+          ease: "power2.inOut"
+        },
+        "+=0"
+      ) // starts right after character animation finishes
+      .to(
+        [scene4Ref.current, char1AltRef.current],
+        {
+          opacity: 0,
+          duration: 1.5,
+          ease: "power2.inOut"
+        },
+        "<"
+      ) // overlap, no black frame
+
+      // ✅ Bubble appears after crossfade
+      .to(
+        bubble2Ref.current,
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: "back.out(1.7)"
+        },
+        "+=0.3"
+      );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());

@@ -387,13 +387,149 @@
 //   );
 // }
 
-import React, { useEffect, useRef } from "react";
+// import React, { useEffect, useRef } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useQuizProgress } from "../../hooks/useQuizProgress";
+// import { gsap } from "gsap";
+// import { ArrowRight } from "lucide-react";
+// import {
+//   broken_heart,
+//   left_finger,
+//   right_finger,
+//   left_hand,
+//   right_hand,
+//   start_quiz,
+//   mystery_box,
+//   objects,
+//   thunder_1,
+//   thunder_2
+// } from "../../assets/images/avatar/index";
+
+// export default function QuizComplete() {
+//   const navigate = useNavigate();
+//   const quizData = useQuizProgress();
+//   const containerRef = useRef(null);
+
+//   const score = quizData.quizState.score || 0;
+//   const totalQuestions = quizData.quizState.totalQuestions || 0;
+
+//   useEffect(() => {
+//     gsap.fromTo(
+//       containerRef.current,
+//       { opacity: 0, y: 50 },
+//       { opacity: 1, y: 0, duration: 1 }
+//     );
+//   }, []);
+
+//   // ✅ Select images based on score
+//   const getScoreImages = () => {
+//     if (score <= 5) return { left: broken_heart, right: broken_heart };
+//     if (score >= 6 && score <= 7)
+//       return { left: left_finger, right: right_finger };
+//     return { left: left_hand, right: right_hand };
+//   };
+
+//   const { left, right } = getScoreImages();
+//   const handleRetry = () => quizData.resetQuiz();
+
+//   return (
+//     <div className="min-h-screen bg-black p-5 flex flex-col gap-5">
+//       <div ref={containerRef} className="w-full flex flex-col gap-5">
+//         {/* ✅ First Card */}
+//         <div className="rounded-2xl bg-[#C2FD5C] min-h-[420px] bg-section p-8 flex flex-col items-center justify-center text-center space-y-8">
+//           <h2 className="text-black text-4xl sm:text-5xl font-bold">
+//             your score!
+//           </h2>
+
+//           {/* ✅ Bigger Score Images (Mobile → Desktop) */}
+//           <div className="flex items-center justify-center gap-12">
+//             <img src={left} alt="score-left" className="w-24 sm:w-[10rem]" />
+//             <p className="text-black text-6xl sm:text-7xl lg:text-8xl font-extrabold">
+//               {score}/{totalQuestions}
+//             </p>
+//             <img src={right} alt="score-right" className="w-24 sm:w-[10rem]" />
+//           </div>
+
+//           <p className="text-black text-xl max-w-lg leading-snug">
+//             🎉 You’ve Reached the Finish Line! <br />
+//             Thanks for your efforts, but we needed more of your skills.
+//           </p>
+
+//           <button
+//             onClick={handleRetry}
+//             className="flex items-center justify-center gap-2 border-2 border-black text-black px-8 py-3 rounded-lg font-semibold text-lg hover:bg-black hover:text-white transition-all"
+//           >
+//             Try Again <ArrowRight className="w-5 h-5" />
+//           </button>
+//         </div>
+
+//         {/* ✅ Second Card with Reduced Padding */}
+//         <div className="relative rounded-2xl bg-[#A35BFB] bg-courses-grid min-h-[250px] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+//           {/* ✅ Title with Tighter Line */}
+//           <h1 className="text-white text-[70px] sm:text-[100px] font-extrabold leading-[0.8] text-center z-10">
+//             print it <br /> right!
+//           </h1>
+
+//           {/* ✅ Start Quiz Image Button (Responsive) */}
+//           <div
+//             onClick={() =>
+//               window.open(
+//                 "https://evolve-printing-challange.vercel.app/",
+//                 "_blank"
+//               )
+//             }
+//             className="absolute top-[70%] sm:top-[50%] right-4 sm:right-[20rem] transform -translate-y-1/2 cursor-pointer group z-20"
+//           >
+//             <div className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px]">
+//               <img
+//                 src={start_quiz}
+//                 alt="start quiz"
+//                 className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 group-hover:rotate-90 shadow-black "
+//               />
+//               <p className="absolute inset-0 flex items-center justify-center leading-12 text-black font-extrabold text-lg sm:text-2xl">
+//                 start <br />
+//                 quiz
+//               </p>
+//             </div>
+//           </div>
+
+//           {/* ✅ Bigger Decorative Images */}
+//           <img
+//             src={mystery_box}
+//             className="absolute top-4 left-4 w-[8rem] sm:w-[10rem] opacity-90"
+//             alt=""
+//           />
+//           <img
+//             src={objects}
+//             className="absolute bottom-0 left-[10rem] w-[6rem] sm:w-[25rem] opacity-90"
+//             alt=""
+//           />
+//           <img
+//             src={thunder_1}
+//             className="absolute top-6 left-[32rem] w-12 sm:w-16 opacity-90"
+//             alt=""
+//           />
+//           <img
+//             src={thunder_2}
+//             className="absolute bottom-4 left-[60rem] w-20 sm:w-18 opacity-90"
+//             alt=""
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuizProgress } from "../../hooks/useQuizProgress";
 import { gsap } from "gsap";
 import { ArrowRight } from "lucide-react";
 import {
   broken_heart,
+  left_bulb,
+  right_bulb,
+  diamond,
   left_finger,
   right_finger,
   left_hand,
@@ -409,6 +545,7 @@ export default function QuizComplete() {
   const navigate = useNavigate();
   const quizData = useQuizProgress();
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const score = quizData.quizState.score || 0;
   const totalQuestions = quizData.quizState.totalQuestions || 0;
@@ -421,15 +558,29 @@ export default function QuizComplete() {
     );
   }, []);
 
-  // ✅ Select images based on score
+  // ✅ Handle window resize for responsive check
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // ✅ Image selection
   const getScoreImages = () => {
-    if (score <= 5) return { left: broken_heart, right: broken_heart };
+    if (score === 1)
+      return { left: broken_heart, right: broken_heart, mobile: broken_heart };
+    if (score >= 2 && score <= 3)
+      return { left: left_bulb, right: right_bulb, mobile: left_bulb };
+    if (score >= 4 && score <= 5)
+      return { left: diamond, right: diamond, mobile: diamond };
     if (score >= 6 && score <= 7)
-      return { left: left_finger, right: right_finger };
-    return { left: left_hand, right: right_hand };
+      return { left: left_finger, right: right_finger, mobile: left_finger };
+    if (score === 8)
+      return { left: left_hand, right: right_hand, mobile: right_hand };
+    return { left: broken_heart, right: broken_heart, mobile: broken_heart };
   };
 
-  const { left, right } = getScoreImages();
+  const { left, right, mobile } = getScoreImages();
   const handleRetry = () => quizData.resetQuiz();
 
   return (
@@ -437,40 +588,60 @@ export default function QuizComplete() {
       <div ref={containerRef} className="w-full flex flex-col gap-5">
         {/* ✅ First Card */}
         <div className="rounded-2xl bg-[#C2FD5C] min-h-[420px] bg-section p-8 flex flex-col items-center justify-center text-center space-y-8">
-          <h2 className="text-black text-4xl sm:text-5xl font-bold">
-            your score!
-          </h2>
-
-          {/* ✅ Bigger Score Images (Mobile → Desktop) */}
-          <div className="flex items-center justify-center gap-12">
-            <img src={left} alt="score-left" className="w-24 sm:w-[10rem]" />
-            <p className="text-black text-6xl sm:text-7xl lg:text-8xl font-extrabold">
-              {score}/{totalQuestions}
-            </p>
-            <img src={right} alt="score-right" className="w-24 sm:w-[10rem]" />
-          </div>
-
-          <p className="text-black text-xl max-w-lg leading-snug">
-            🎉 You’ve Reached the Finish Line! <br />
-            Thanks for your efforts, but we needed more of your skills.
-          </p>
+          {isMobile ? (
+            <>
+              <img src={mobile} alt="score-mobile" className="w-32 mx-auto" />
+              <h2 className="text-black text-3xl font-bold lowercase">
+                your score
+              </h2>
+              <p className="text-black text-6xl font-extrabold lowercase">
+                {score}/{totalQuestions}
+              </p>
+              <p className="text-black text-lg max-w-xs leading-snug lowercase">
+                🎉 you’ve reached the finish line! thanks for your efforts, but
+                we needed more of your skills.
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="text-black text-4xl sm:text-5xl font-bold">
+                your score!
+              </h2>
+              <div className="flex items-center justify-center gap-12">
+                <img
+                  src={left}
+                  alt="score-left"
+                  className="w-24 sm:w-[10rem]"
+                />
+                <p className="text-black text-6xl sm:text-7xl lg:text-8xl font-extrabold">
+                  {score}/{totalQuestions}
+                </p>
+                <img
+                  src={right}
+                  alt="score-right"
+                  className="w-24 sm:w-[10rem]"
+                />
+              </div>
+              <p className="text-black text-xl max-w-lg leading-snug lowercase">
+                🎉 you’ve reached the finish line! <br />
+                thanks for your efforts, but we needed more of your skills.
+              </p>
+            </>
+          )}
 
           <button
             onClick={handleRetry}
             className="flex items-center justify-center gap-2 border-2 border-black text-black px-8 py-3 rounded-lg font-semibold text-lg hover:bg-black hover:text-white transition-all"
           >
-            Try Again <ArrowRight className="w-5 h-5" />
+            try again <ArrowRight className="w-5 h-5" />
           </button>
         </div>
 
-        {/* ✅ Second Card with Reduced Padding */}
+        {/* ✅ Second Card */}
         <div className="relative rounded-2xl bg-[#A35BFB] bg-courses-grid min-h-[250px] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
-          {/* ✅ Title with Tighter Line */}
-          <h1 className="text-white text-[70px] sm:text-[100px] font-extrabold leading-[0.8] text-center z-10">
+          <h1 className="text-white text-[50px] sm:text-[100px] font-extrabold leading-[0.8] text-center z-10 lowercase">
             print it <br /> right!
           </h1>
-
-          {/* ✅ Start Quiz Image Button (Responsive) */}
           <div
             onClick={() =>
               window.open(
@@ -486,14 +657,13 @@ export default function QuizComplete() {
                 alt="start quiz"
                 className="absolute inset-0 w-full h-full object-contain transition-transform duration-300 group-hover:rotate-90 shadow-black "
               />
-              <p className="absolute inset-0 flex items-center justify-center leading-12 text-black font-extrabold text-lg sm:text-2xl">
+              <p className="absolute inset-0 flex items-center justify-center leading-tight text-black font-extrabold text-lg sm:text-2xl lowercase">
                 start <br />
                 quiz
               </p>
             </div>
           </div>
-
-          {/* ✅ Bigger Decorative Images */}
+          {/* Decorative Images */}
           <img
             src={mystery_box}
             className="absolute top-4 left-4 w-[8rem] sm:w-[10rem] opacity-90"

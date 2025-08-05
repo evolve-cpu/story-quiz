@@ -92,6 +92,9 @@ import thunder_2 from "./thunder_2.svg";
 import eye from "./eye.svg";
 import search from "./search.svg";
 import down_arrow from "./down_arrow.svg";
+import left_bulb from "./left_bulb.svg";
+import right_bulb from "./right_bulb.svg";
+import diamond from "./diamond.svg";
 
 export {
   boy_with_tablet,
@@ -187,5 +190,8 @@ export {
   thunder_2,
   eye,
   search,
-  down_arrow
+  down_arrow,
+  left_bulb,
+  right_bulb,
+  diamond
 };

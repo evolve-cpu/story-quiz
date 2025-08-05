@@ -25,7 +25,10 @@ const Module17 = () => {
   }, []);
 
   useEffect(() => {
-    gsap.set(scene25Ref.current, { opacity: 0, scale: 1 });
+    gsap.set([scene25Ref.current, scene25TextBoxRef.current], {
+      opacity: 0,
+      scale: 1
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -43,7 +46,11 @@ const Module17 = () => {
       duration: 1,
       ease: "power2.out"
     })
+      // ✅ Fade in text box alongside scene
+      .to(scene25TextBoxRef.current, { opacity: 1, duration: 1 }, "<0.5")
       .to(scene25Ref.current, { scale: 1.05, duration: 2 })
+      // ✅ Optionally fade out text when scene fades out
+      .to(scene25TextBoxRef.current, { opacity: 0, duration: 1 }, "-=0.5")
       .to(scene25Ref.current, {
         opacity: 0,
         duration: 1,

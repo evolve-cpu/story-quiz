@@ -604,7 +604,7 @@ const Module6 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=6000",
+        end: "+=5000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -616,7 +616,7 @@ const Module6 = () => {
     tl.to(bgRef.current, {
       scale: 1.2,
       duration: 2,
-      ease: "power2.out"
+      ease: "power3.out"
     });
 
     // Pause for quiz
@@ -635,7 +635,7 @@ const Module6 = () => {
     tl.to([bgRef.current, charRef.current], {
       opacity: 0,
       duration: 1,
-      ease: "power1.inOut"
+      ease: "power3.inOut"
     });
 
     return () => {

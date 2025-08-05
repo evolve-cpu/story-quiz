@@ -589,6 +589,12 @@ const Module16 = React.lazy(() => import("./modules/Module16"));
 const Module17 = React.lazy(() => import("./modules/Module17"));
 
 function QuizContent() {
+  // ✅ Temporary toggle to test score screen
+  // const DEV_SHOW_SCORE = true; // set to false when done testing
+
+  // if (DEV_SHOW_SCORE) {
+  //   return <QuizComplete />;
+  // }
   const quiz = useQuizProgress();
   const { setLenisInstance } = useQuiz();
 
@@ -633,6 +639,13 @@ function QuizContent() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (loadedModules.includes(3)) {
+      // ✅ when Module3 is added to DOM, recalc GSAP
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+    }
+  }, [loadedModules]);
 
   if (quizState.isComplete) {
     return <QuizComplete />;

@@ -1760,6 +1760,8 @@ const Module3 = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    ScrollTrigger.refresh();
+
     // Reset opacity
     gsap.set(
       [
@@ -1777,7 +1779,7 @@ const Module3 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=1000",
+        end: "+=3000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
@@ -1824,7 +1826,11 @@ const Module3 = () => {
         duration: isMobile ? 1.5 : 2,
         ease: "power2.inOut"
       })
-      .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1");
+      // ✅ Only fade out the text, keep BG & Char visible
+      .to(scene8TextRef.current, { opacity: 0, duration: 0.5 }, "+=1")
+
+      // ✅ Keep Scene8 visible until ScrollTrigger ends
+      .set([scene8BgRef.current, scene8CharRef.current], { opacity: 1 });
 
     return () => {
       if (tl.scrollTrigger) tl.scrollTrigger.kill();

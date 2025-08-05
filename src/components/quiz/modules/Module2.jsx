@@ -2281,381 +2281,6 @@
 
 // export default Module2;
 
-// import React, { useEffect, useRef, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// import {
-//   story_scene_6,
-//   story_scene_7,
-//   char_1,
-//   char_1_1,
-//   story_scene_8_char,
-//   story_scene_8_bg_1
-// } from "../../../assets/images/avatar";
-
-// import QuizQuestionModal from "../QuizQuestionModal";
-// import { useQuizProgress } from "../../../hooks/useQuizProgress";
-// import { module3ScrollTriggerRef } from "./Module3";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const Module2 = () => {
-//   const containerRef = useRef(null);
-//   const scene6Ref = useRef(null);
-//   const scene7Ref = useRef(null);
-//   const charRef = useRef(null);
-//   const charAltRef = useRef(null);
-//   const scene7TextRef = useRef(null);
-//   const scene8BgRef = useRef(null);
-//   const scene8CharRef = useRef(null);
-//   const scene8TextRef = useRef(null);
-
-//   const [showQuiz, setShowQuiz] = useState(false);
-//   const [quizCompleted, setQuizCompleted] = useState(false);
-
-//   const { submitResponse } = useQuizProgress();
-//   const masterTimelineRef = useRef(null);
-//   const scrollTriggerRef = useRef(null);
-
-//   useEffect(() => {
-//     gsap.set(
-//       [
-//         scene7Ref.current,
-//         charRef.current,
-//         charAltRef.current,
-//         scene7TextRef.current
-//       ],
-//       { opacity: 0, pointerEvents: "none" }
-//     );
-
-//     gsap.set(
-//       [scene8BgRef.current, scene8CharRef.current, scene8TextRef.current],
-//       { opacity: 0 }
-//     );
-
-//     const tl = gsap.timeline();
-//     masterTimelineRef.current = tl;
-
-//     scrollTriggerRef.current = ScrollTrigger.create({
-//       animation: tl,
-//       trigger: containerRef.current,
-//       start: "top top",
-//       end: "+=6000",
-//       scrub: 1.5,
-//       pin: true,
-//       anticipatePin: 1
-//     });
-
-//     // Scene 6
-//     tl.fromTo(scene6Ref.current, { opacity: 0 }, { opacity: 1, duration: 1 });
-//     tl.to(scene6Ref.current, { scale: 1.05, duration: 1.5 });
-
-//     tl.call(() => {
-//       if (!quizCompleted) {
-//         setShowQuiz(true);
-//         scrollTriggerRef.current?.disable();
-//         document.body.style.overflow = "hidden";
-//       }
-//     });
-
-//     tl.addPause();
-
-//     // Continue rest of the timeline if quiz was done
-//     tl.to(scene6Ref.current, { opacity: 0, duration: 1 });
-
-//     // Scene 7
-//     tl.fromTo(
-//       scene7Ref.current,
-//       { opacity: 0, y: 100 },
-//       { opacity: 1, y: 0, duration: 1.5 }
-//     );
-//     tl.to(charRef.current, { opacity: 1, duration: 0.5 });
-//     tl.to(charRef.current, { x: 80, y: -20, duration: 1.6 });
-//     tl.to(charRef.current, { opacity: 0, duration: 0.1 });
-//     tl.set(charAltRef.current, { x: 80, y: 10 });
-//     tl.to(charAltRef.current, { opacity: 1, duration: 0.2 });
-//     tl.to(charAltRef.current, { x: 150, y: 0, duration: 1.6 });
-//     tl.to(scene7TextRef.current, { opacity: 1, duration: 1 });
-//     tl.to(scene7TextRef.current, { opacity: 0, duration: 1 }, "+=0.5");
-//     tl.to([scene7Ref.current, charAltRef.current], {
-//       opacity: 0,
-//       duration: 1.5
-//     });
-
-//     // Scene 8
-//     tl.set(scene8BgRef.current, { x: "0%", opacity: 0 });
-//     tl.to(scene8BgRef.current, { opacity: 1, duration: 2 });
-//     tl.fromTo(
-//       scene8CharRef.current,
-//       { opacity: 0 },
-//       { opacity: 1, duration: 2.5 },
-//       "<0.5"
-//     );
-//     tl.to(scene8BgRef.current, { x: "30%", duration: 2 });
-//     tl.to(scene8TextRef.current, { opacity: 1, duration: 1 });
-//     tl.to(scene8TextRef.current, { opacity: 0, duration: 1 }, "+=1");
-//     tl.to(scene8CharRef.current, { opacity: 0, scale: 0.9, duration: 1 });
-//     tl.to(scene8BgRef.current, { opacity: 0, scale: 1.05, duration: 1 }, "<");
-
-//     // // Enable Module 3
-//     // tl.call(() => {
-//     //   module3ScrollTriggerRef.current?.enable();
-//     // });
-
-//     return () => {
-//       // scrollTriggerRef.current?.kill();
-//       // tl.kill();
-//       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-//       tl.kill();
-//     };
-//   }, [quizCompleted]);
-
-//   useEffect(() => {
-//     if (quizCompleted && masterTimelineRef.current) {
-//       document.body.style.overflow = "auto";
-//       requestAnimationFrame(() => {
-//         masterTimelineRef.current.play();
-//         ScrollTrigger.refresh();
-//       });
-//     }
-//   }, [quizCompleted]);
-
-//   const handleQuizClose = (response, isCorrect) => {
-//     setShowQuiz(false);
-//     setQuizCompleted(true);
-//     submitResponse({
-//       questionId: "scene6_q1",
-//       response: response,
-//       correctAnswer: "To prevent slipping"
-//     });
-//   };
-
-//   return (
-//     <div
-//       ref={containerRef}
-//       id="module-2"
-//       className="relative w-full h-screen text-white lowercase bg-black"
-//     >
-//       {/* === Scene 6 === */}
-//       <div
-//         ref={scene6Ref}
-//         className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"
-//       >
-//         <img
-//           src={story_scene_6}
-//           alt="Scene 6"
-//           className="w-full h-full object-cover"
-//         />
-//       </div>
-
-//       {/* === Scene 7 === */}
-//       <div
-//         ref={scene7Ref}
-//         className="absolute top-0 left-0 w-full h-full z-20 flex items-center justify-center opacity-0"
-//       >
-//         <img
-//           src={story_scene_7}
-//           alt="Scene 7"
-//           className="w-full h-full object-cover"
-//         />
-//         <img
-//           ref={charRef}
-//           src={char_1}
-//           alt="Char"
-//           className="absolute -bottom-4 left-16 w-[500px] h-[500px] object-contain opacity-0 z-30"
-//         />
-//         <img
-//           ref={charAltRef}
-//           src={char_1_1}
-//           alt="Char Alt"
-//           className="absolute bottom-4 left-16 w-[650px] h-[650px] object-contain opacity-0 z-30"
-//         />
-//         <div
-//           ref={scene7TextRef}
-//           className="absolute bottom-6 left-6 z-40 opacity-0"
-//         >
-//           <div className="bg-black/80 text-white p-4 rounded-md w-fit">
-//             <p>Scene 7 text goes here</p>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* === Scene 8 === */}
-//       <div className="absolute top-0 left-0 w-full h-full z-30 flex items-center justify-center overflow-visible pointer-events-none">
-//         <img
-//           ref={scene8BgRef}
-//           src={story_scene_8_bg_1}
-//           alt="Scene 8 BG"
-//           className="absolute object-contain scale-x-[180%] scale-y-[150%] opacity-0"
-//           style={{ right: 0 }}
-//         />
-//         <div
-//           ref={scene8TextRef}
-//           className="absolute bottom-6 left-6 z-40 opacity-0 pointer-events-none"
-//         >
-//           <div className="bg-black/80 text-white p-4 rounded-md w-fit">
-//             <p>Scene 8 text goes here</p>
-//           </div>
-//         </div>
-//         <img
-//           ref={scene8CharRef}
-//           src={story_scene_8_char}
-//           alt="Scene 8 Char"
-//           className="absolute object-fill opacity-0"
-//         />
-//       </div>
-
-//       {/* === Quiz === */}
-//       {showQuiz && (
-//         <QuizQuestionModal
-//           isVisible={showQuiz}
-//           onClose={handleQuizClose}
-//           questionId="scene6_q1"
-//           question="Why do these steps have grooves anyway?"
-//           options={[
-//             "To prevent slipping",
-//             "For aesthetic design",
-//             "To reduce weight",
-//             "To channel water"
-//           ]}
-//           correctIndex={0}
-//           reason="Grooves improve traction to reduce the risk of slipping on the steps."
-//           backgroundImage={story_scene_6}
-//           type="single"
-//         />
-//       )}
-//       {/* Spacer for scroll to reach Module 3 */}
-//       {/* <div className="h-[120vh] bg-transparent w-full"></div> */}
-//     </div>
-//   );
-// };
-
-// export default Module2;
-
-// import React, { useEffect, useRef, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { story_scene_6 } from "../../../assets/images/avatar";
-// import QuizQuestionModal from "../QuizQuestionModal";
-// import { useQuizProgress } from "../../../hooks/useQuizProgress";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const Module2 = () => {
-//   const containerRef = useRef(null);
-//   const scene6Ref = useRef(null);
-//   const [showQuiz, setShowQuiz] = useState(false);
-//   const [quizCompleted, setQuizCompleted] = useState(false);
-//   const { submitResponse } = useQuizProgress();
-
-//   // Prevent scroll and touch
-//   const preventDefault = (e) => e.preventDefault();
-
-//   const disableScrollEvents = () => {
-//     document.body.style.overflow = "hidden";
-//     const scrollContainer = document.getElementById("module-2");
-//     if (scrollContainer) scrollContainer.style.overflow = "hidden";
-
-//     window.addEventListener("wheel", preventDefault, { passive: false });
-//     window.addEventListener("touchmove", preventDefault, { passive: false });
-//   };
-
-//   const enableScrollEvents = () => {
-//     document.body.style.overflow = "auto";
-//     const scrollContainer = document.getElementById("module-2");
-//     if (scrollContainer) scrollContainer.style.overflow = "auto";
-
-//     window.removeEventListener("wheel", preventDefault);
-//     window.removeEventListener("touchmove", preventDefault);
-//   };
-
-//   useEffect(() => {
-//     const tl = gsap.timeline({
-//       scrollTrigger: {
-//         trigger: containerRef.current,
-//         start: "top top",
-//         end: "+=2000",
-//         scrub: 1.5,
-//         pin: true,
-//         anticipatePin: 1,
-//         markers: false
-//       }
-//     });
-
-//     // ❌ Removed intro animation (opacity and initial scaling)
-
-//     tl.call(() => {
-//       if (!quizCompleted) {
-//         setShowQuiz(true);
-//         disableScrollEvents();
-//         tl.pause();
-//       }
-//     });
-
-//     // Outro animation (keep if you still want fade out)
-//     tl.to(scene6Ref.current, { opacity: 0, scale: 1.1, duration: 0.1 });
-
-//     return () => {
-//       ScrollTrigger.getAll().forEach((trigger) => {
-//         if (trigger.trigger === containerRef.current) {
-//           trigger.kill();
-//         }
-//       });
-//       tl.kill();
-//       enableScrollEvents();
-//     };
-//   }, [quizCompleted]);
-
-//   const handleQuizClose = () => {
-//     setShowQuiz(false);
-//     setQuizCompleted(true);
-//     enableScrollEvents();
-//   };
-
-//   return (
-//     <div
-//       ref={containerRef}
-//       id="module-2"
-//       className="relative w-full h-screen text-white lowercase bg-black"
-//     >
-//       {/* Scene 6 visual */}
-//       <div
-//         ref={scene6Ref}
-//         className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"
-//       >
-//         <img
-//           src={story_scene_6}
-//           alt="Scene 6"
-//           className="w-full h-full object-cover"
-//         />
-//       </div>
-
-//       {/* Modal Quiz */}
-//       {showQuiz && (
-//         <QuizQuestionModal
-//           isVisible={showQuiz}
-//           onClose={handleQuizClose}
-//           questionId="scene6_q1"
-//           question="Why do these steps have grooves anyway?"
-//           options={[
-//             "To prevent slipping",
-//             "For aesthetic design",
-//             "To reduce weight",
-//             "To channel water"
-//           ]}
-//           correctIndex={0}
-//           reason="Grooves improve traction to reduce the risk of slipping on the steps."
-//           backgroundImage={story_scene_6}
-//           type="single"
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Module2;
-
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -2693,107 +2318,47 @@ const Module2 = () => {
     window.removeEventListener("touchmove", preventDefault);
   };
 
-  // useEffect(() => {
-  //   const scrollContainer = document.getElementById("module-2");
-
-  //   const tl = gsap.timeline({
-  //     // scrollTrigger: {
-  //     //   trigger: containerRef.current,
-  //     //   start: "top top",
-  //     //   end: "+=2000",
-  //     //   // end: +=${tl.duration() * 1000},
-  //     //   scrub: 1.5,
-  //     //   pin: true,
-  //     //   anticipatePin: 1,
-  //     //   markers: false
-  //     // }
-  //   });
-
-  //   tl.to({}, { duration: 4 });
-
-  //   // tl.fromTo(scene6Ref.current, { opacity: 0 }, { opacity: 1, duration: 1 });
-  //   // tl.to(scene6Ref.current, { scale: 1.05, duration: 1.5 });
-
-  //   tl.call(() => {
-  //     if (!quizCompleted) {
-  //       setShowQuiz(true);
-  //       disableScrollEvents();
-  //       tl.pause();
-  //     }
-  //   });
-
-  //   tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
-
-  //   ScrollTrigger.create({
-  //     trigger: containerRef.current,
-  //     start: "top top",
-  //     end: "+=2000",
-  //     // end: +=${tl.duration() * 1000},
-  //     scrub: 1.5,
-  //     pin: true,
-  //     anticipatePin: 1,
-  //     markers: false
-  //   });
-
-  //   return () => {
-  //     ScrollTrigger.getAll().forEach((trigger) => {
-  //       if (trigger.trigger === containerRef.current) {
-  //         trigger.kill();
-  //       }
-  //     });
-  //     tl.kill();
-  //     enableScrollEvents(); // Clean up if unmounted early
-  //   };
-  // }, [quizCompleted]);
-
   useEffect(() => {
-    const scrollContainer = document.getElementById("module-2");
-
-    const tl = gsap.timeline();
-
-    // Example scene animation
-    tl.to(scene6Ref.current, { opacity: 1, duration: 1 }).to(
-      scene6Ref.current,
-      { scale: 1.05, duration: 1.5 }
-    );
-
-    // ScrollTrigger to pin and scrub animations
-    const trigger = ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "+=3000",
-      scrub: 1.5,
-      pin: true,
-      anticipatePin: 1,
-      markers: false,
-      onEnter: () => {
-        if (!quizCompleted) {
-          setShowQuiz(true);
-          disableScrollEvents();
-          tl.pause(); // Pause animation when modal opens
-        }
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=2000",
+        scrub: 1.5,
+        pin: true,
+        anticipatePin: 1,
+        markers: false
       }
     });
 
+    // ❌ Removed intro animation (opacity and initial scaling)
+
+    tl.call(() => {
+      if (!quizCompleted) {
+        setShowQuiz(true);
+        disableScrollEvents();
+        tl.pause();
+      }
+    });
+
+    // Outro animation (keep if you still want fade out)
+    tl.to(scene6Ref.current, { opacity: 0, scale: 1.1, duration: 0.1 });
+
     return () => {
-      trigger.kill();
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.trigger === containerRef.current) {
+          trigger.kill();
+        }
+      });
       tl.kill();
       enableScrollEvents();
     };
   }, [quizCompleted]);
 
   const handleQuizClose = () => {
-    // const handleQuizClose = (response, isCorrect) => {
     setShowQuiz(false);
     setQuizCompleted(true);
-    enableScrollEvents(); // Resume scroll
-    gsap.globalTimeline.resume();
-
-    // submitResponse({
-    //   questionId: "scene6_q1",
-    //   response: response,
-    //   correctAnswer: "To prevent slipping"
-    // });
+    enableScrollEvents();
   };
 
   return (
@@ -2838,3 +2403,241 @@ const Module2 = () => {
 };
 
 export default Module2;
+
+// import React, { useEffect, useRef, useState } from "react";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import { story_scene_6 } from "../../../assets/images/avatar";
+// import QuizQuestionModal from "../QuizQuestionModal";
+// import { useQuizProgress } from "../../../hooks/useQuizProgress";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// const Module2 = () => {
+//   const containerRef = useRef(null);
+//   const scene6Ref = useRef(null);
+//   const [showQuiz, setShowQuiz] = useState(false);
+//   const [quizCompleted, setQuizCompleted] = useState(false);
+//   const { submitResponse } = useQuizProgress();
+
+//   // Prevent scroll and touch
+//   const preventDefault = (e) => e.preventDefault();
+
+//   const disableScrollEvents = () => {
+//     document.body.style.overflow = "hidden";
+//     const scrollContainer = document.getElementById("module-2");
+//     if (scrollContainer) scrollContainer.style.overflow = "hidden";
+
+//     window.addEventListener("wheel", preventDefault, { passive: false });
+//     window.addEventListener("touchmove", preventDefault, { passive: false });
+//   };
+
+//   const enableScrollEvents = () => {
+//     document.body.style.overflow = "auto";
+//     const scrollContainer = document.getElementById("module-2");
+//     if (scrollContainer) scrollContainer.style.overflow = "auto";
+
+//     window.removeEventListener("wheel", preventDefault);
+//     window.removeEventListener("touchmove", preventDefault);
+//   };
+
+//   // useEffect(() => {
+//   //   const scrollContainer = document.getElementById("module-2");
+
+//   //   const tl = gsap.timeline({
+//   //     // scrollTrigger: {
+//   //     //   trigger: containerRef.current,
+//   //     //   start: "top top",
+//   //     //   end: "+=2000",
+//   //     //   // end: +=${tl.duration() * 1000},
+//   //     //   scrub: 1.5,
+//   //     //   pin: true,
+//   //     //   anticipatePin: 1,
+//   //     //   markers: false
+//   //     // }
+//   //   });
+
+//   //   tl.to({}, { duration: 4 });
+
+//   //   // tl.fromTo(scene6Ref.current, { opacity: 0 }, { opacity: 1, duration: 1 });
+//   //   // tl.to(scene6Ref.current, { scale: 1.05, duration: 1.5 });
+
+//   //   tl.call(() => {
+//   //     if (!quizCompleted) {
+//   //       setShowQuiz(true);
+//   //       disableScrollEvents();
+//   //       tl.pause();
+//   //     }
+//   //   });
+
+//   //   tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
+
+//   //   ScrollTrigger.create({
+//   //     trigger: containerRef.current,
+//   //     start: "top top",
+//   //     end: "+=2000",
+//   //     // end: +=${tl.duration() * 1000},
+//   //     scrub: 1.5,
+//   //     pin: true,
+//   //     anticipatePin: 1,
+//   //     markers: false
+//   //   });
+
+//   //   return () => {
+//   //     ScrollTrigger.getAll().forEach((trigger) => {
+//   //       if (trigger.trigger === containerRef.current) {
+//   //         trigger.kill();
+//   //       }
+//   //     });
+//   //     tl.kill();
+//   //     enableScrollEvents(); // Clean up if unmounted early
+//   //   };
+//   // }, [quizCompleted]);
+
+//   // useEffect(() => {
+//   //   const scrollContainer = document.getElementById("module-2");
+
+//   //   const tl = gsap.timeline();
+
+//   //   // Example scene animation
+//   //   tl.to(scene6Ref.current, { opacity: 1, duration: 1 }).to(
+//   //     scene6Ref.current,
+//   //     { scale: 1.05, duration: 1.5 }
+//   //   );
+
+//   //   // ScrollTrigger to pin and scrub animations
+//   //   const trigger = ScrollTrigger.create({
+//   //     trigger: containerRef.current,
+//   //     start: "top top",
+//   //     end: "+=4000",
+//   //     scrub: 1.5,
+//   //     pin: true,
+//   //     anticipatePin: 1,
+//   //     markers: false,
+//   //     onEnter: () => {
+//   //       if (!quizCompleted) {
+//   //         setShowQuiz(true);
+//   //         disableScrollEvents();
+//   //         tl.pause(); // Pause animation when modal opens
+//   //       }
+//   //     }
+//   //   });
+
+//   //   return () => {
+//   //     trigger.kill();
+//   //     tl.kill();
+//   //     enableScrollEvents();
+//   //   };
+//   // }, [quizCompleted]);
+
+//   // const handleQuizClose = () => {
+//   //   // const handleQuizClose = (response, isCorrect) => {
+//   //   setShowQuiz(false);
+//   //   setQuizCompleted(true);
+//   //   enableScrollEvents(); // Resume scroll
+//   //   gsap.globalTimeline.resume();
+
+//   useEffect(() => {
+//     gsap.registerPlugin(ScrollTrigger);
+
+//     // ✅ Create timeline for Module2
+//     const tl = gsap.timeline({
+//       defaults: { ease: "power2.inOut" }
+//     });
+
+//     tl.to(scene6Ref.current, { opacity: 1, duration: 1 }).to(
+//       scene6Ref.current,
+//       { scale: 1.05, duration: 1.5 }
+//     );
+
+//     // ✅ Create ScrollTrigger for Module2
+//     const trigger = ScrollTrigger.create({
+//       trigger: containerRef.current,
+//       start: "top top",
+//       end: "+=2000",
+//       scrub: 1.5,
+//       pin: true,
+//       anticipatePin: 1,
+//       markers: false,
+//       onEnter: () => {
+//         if (!quizCompleted) {
+//           setShowQuiz(true);
+//           disableScrollEvents();
+
+//           // ✅ Pause animation and disable ScrollTrigger
+//           tl.pause();
+//           trigger.disable();
+//         }
+//       }
+//     });
+//     tl.to(scene6Ref.current, { opacity: 0.5, scale: 1.1, duration: 1 });
+//     return () => {
+//       trigger.kill();
+//       tl.kill();
+//       enableScrollEvents(); // cleanup in case unmounted early
+//     };
+//   }, [quizCompleted]);
+
+//   // ✅ Modal close handler
+//   const handleQuizClose = () => {
+//     setShowQuiz(false);
+//     setQuizCompleted(true);
+//     enableScrollEvents();
+
+//     // ✅ Reactivate triggers & refresh positions for Module3
+//     gsap.delayedCall(0.05, () => {
+//       ScrollTrigger.getAll().forEach((st) => st.enable());
+//       ScrollTrigger.refresh(); // recalc positions
+//       gsap.globalTimeline.resume(); // resume GSAP animations
+//     });
+//   };
+
+//   // submitResponse({
+//   //   questionId: "scene6_q1",
+//   //   response: response,
+//   //   correctAnswer: "To prevent slipping"
+//   // });
+//   // };
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       id="module-2"
+//       className="relative w-full h-screen text-white lowercase bg-black"
+//     >
+//       {/* Scene 6 visual */}
+//       <div
+//         ref={scene6Ref}
+//         className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center"
+//       >
+//         <img
+//           src={story_scene_6}
+//           alt="Scene 6"
+//           className="w-full h-full object-cover"
+//         />
+//       </div>
+
+//       {/* Modal Quiz */}
+//       {showQuiz && (
+//         <QuizQuestionModal
+//           isVisible={showQuiz}
+//           onClose={handleQuizClose}
+//           questionId="scene6_q1"
+//           question="Why do these steps have grooves anyway?"
+//           options={[
+//             "To prevent slipping",
+//             "For aesthetic design",
+//             "To reduce weight",
+//             "To channel water"
+//           ]}
+//           correctIndex={0}
+//           reason="Grooves improve traction to reduce the risk of slipping on the steps."
+//           backgroundImage={story_scene_6}
+//           type="single"
+//         />
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Module2;

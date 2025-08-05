@@ -583,7 +583,7 @@ export default function QuizComplete() {
   const { left, right, mobile } = getScoreImages();
   // const handleRetry = () => quizData.resetQuiz();
   const handleRetry = () => {
-    window.location.href = "https://story-quiz.netlify.app/quiz-selection"; // ✅ hard reload of the same URL
+    window.location.href = "https://story-quiz.vercel.app/quiz-selection"; // ✅ hard reload of the same URL
   };
 
   return (

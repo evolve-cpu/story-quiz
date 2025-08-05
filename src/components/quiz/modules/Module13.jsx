@@ -45,7 +45,7 @@ const Module13 = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=6500",
+        end: "+=5000",
         scrub: 1.5,
         pin: true,
         anticipatePin: 1

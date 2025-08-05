@@ -2066,7 +2066,7 @@ const Module3 = () => {
           ref={scene8CharRef}
           src={isMobile ? story_scene_8_char_mobile : story_scene_8_char}
           alt="Scene 8 Char"
-          className="absolute object-fill opacity-0"
+          className="absolute object-fill opacity-0 bottom-0"
         />
         <div
           ref={scene8TextRef}

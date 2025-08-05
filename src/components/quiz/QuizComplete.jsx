@@ -581,7 +581,10 @@ export default function QuizComplete() {
   };
 
   const { left, right, mobile } = getScoreImages();
-  const handleRetry = () => quizData.resetQuiz();
+  // const handleRetry = () => quizData.resetQuiz();
+  const handleRetry = () => {
+    window.location.reload(); // ✅ hard reload of the same URL
+  };
 
   return (
     <div className="min-h-screen bg-black p-5 flex flex-col gap-5">

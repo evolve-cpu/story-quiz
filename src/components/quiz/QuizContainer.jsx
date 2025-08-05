@@ -612,6 +612,12 @@ function QuizContent() {
   const [loadedModules, setLoadedModules] = useState([1]); // Load only module 1 initially
 
   useEffect(() => {
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    gsap.globalTimeline.clear();
+    ScrollTrigger.refresh();
+  }, []);
+
+  useEffect(() => {
     ScrollTrigger.refresh();
   }, []);
 
@@ -630,7 +636,7 @@ function QuizContent() {
     if (scrollY + windowHeight * 2 >= docHeight) {
       setLoadedModules((prev) => {
         const next = prev.length + 1;
-        return next <= 16 && !prev.includes(next) ? [...prev, next] : prev;
+        return next <= 17 && !prev.includes(next) ? [...prev, next] : prev;
       });
     }
   };
@@ -779,13 +785,12 @@ export default function QuizContainer() {
 
 // gsap.registerPlugin(ScrollTrigger);
 
-// // ✅ Correctly cased imports
 // const Module1 = React.lazy(() => import("./modules/Module1"));
 // const Module2 = React.lazy(() => import("./modules/Module2"));
 // const Module3 = React.lazy(() => import("./modules/Module3"));
 // const Module4 = React.lazy(() => import("./modules/Module4"));
 // const Module5 = React.lazy(() => import("./modules/Module5"));
-// const Module6 = React.lazy(() => import("./modules/module6")); // ✅ FIXED case
+// const Module6 = React.lazy(() => import("./modules/module6"));
 // const Module7 = React.lazy(() => import("./modules/Module7"));
 // const Module8 = React.lazy(() => import("./modules/Module8"));
 // const Module9 = React.lazy(() => import("./modules/Module9"));
@@ -813,52 +818,46 @@ export default function QuizContainer() {
 //     return null;
 //   }
 
-//   const [loadedModules, setLoadedModules] = useState([1]); // start with Module 1
+//   const [loadedModules, setLoadedModules] = useState([1]);
 
-//   // ✅ ScrollTrigger initial refresh
 //   useEffect(() => {
 //     ScrollTrigger.refresh();
 //   }, []);
 
-//   // ✅ Refresh GSAP whenever new modules are loaded
 //   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       ScrollTrigger.refresh(); // ensures GSAP recalculates new heights
-//     }, 200);
-//     return () => clearTimeout(timer);
-//   }, [loadedModules]);
+//     if (quizState.isComplete) {
+//       console.log("✅ QUIZ COMPLETE! Showing QuizComplete page...");
+//     }
+//   }, [quizState.isComplete]);
 
-//   // ✅ Load more modules dynamically when scrolling near bottom
 //   const handleScroll = () => {
 //     const scrollY = window.scrollY;
 //     const windowHeight = window.innerHeight;
-//     const docHeight = document.documentElement.scrollHeight;
+//     const docHeight = document.body.scrollHeight;
 
-//     if (scrollY + windowHeight * 1.5 >= docHeight) {
+//     if (scrollY + windowHeight * 2 >= docHeight) {
 //       setLoadedModules((prev) => {
 //         const next = prev.length + 1;
+//         // ✅ allow loading up to module 17
 //         return next <= 17 && !prev.includes(next) ? [...prev, next] : prev;
 //       });
 //     }
 //   };
 
 //   useEffect(() => {
-//     window.addEventListener("scroll", handleScroll, { passive: true });
+//     window.addEventListener("scroll", handleScroll);
 //     return () => window.removeEventListener("scroll", handleScroll);
 //   }, []);
 
+//   // ✅ If quiz is complete, render QuizComplete page
 //   if (quizState.isComplete) {
 //     return <QuizComplete />;
 //   }
 
 //   return (
 //     <div className="relative bg-black overflow-x-hidden overflow-y-visible scrollbar-hide">
-//       {/* ✅ Removed min-h-[1000vh] to allow natural content height */}
-
-//       {/* Background Overlay */}
 //       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-40 bg-gradient-to-b from-black/30 via-transparent to-black/30" />
 
-//       {/* Logo */}
 //       <Link to="/" className="fixed top-6 left-6 z-50">
 //         <img
 //           src={evolveLogo}
@@ -867,38 +866,26 @@ export default function QuizContainer() {
 //         />
 //       </Link>
 
-//       {/* ✅ Lazy Load Modules */}
 //       <Suspense fallback={<div className="text-white p-10">Loading...</div>}>
-//         {loadedModules.map((index) => {
-//           const ModuleComponent = {
-//             1: Module1,
-//             2: Module2,
-//             3: Module3,
-//             4: Module4,
-//             5: Module5,
-//             6: Module6,
-//             7: Module7,
-//             8: Module8,
-//             9: Module9,
-//             10: Module10,
-//             11: Module11,
-//             12: Module12,
-//             13: Module13,
-//             14: Module14,
-//             15: Module15,
-//             16: Module16,
-//             17: Module17
-//           }[index];
-
-//           return (
-//             <div key={index} id={`module-${index}`}>
-//               <ModuleComponent />
-//             </div>
-//           );
-//         })}
+//         {loadedModules.includes(1) && <Module1 />}
+//         {loadedModules.includes(2) && <Module2 />}
+//         {/* {loadedModules.includes(3) && <Module3 />} */}
+//         {loadedModules.includes(4) && <Module4 />}
+//         {loadedModules.includes(5) && <Module5 />}
+//         {loadedModules.includes(6) && <Module6 />}
+//         {loadedModules.includes(7) && <Module7 />}
+//         {loadedModules.includes(8) && <Module8 />}
+//         {loadedModules.includes(9) && <Module9 />}
+//         {loadedModules.includes(10) && <Module10 />}
+//         {loadedModules.includes(11) && <Module11 />}
+//         {loadedModules.includes(12) && <Module12 />}
+//         {loadedModules.includes(13) && <Module13 />}
+//         {loadedModules.includes(14) && <Module14 />}
+//         {loadedModules.includes(15) && <Module15 />}
+//         {loadedModules.includes(16) && <Module16 />}
+//         {loadedModules.includes(17) && <Module17 />}
 //       </Suspense>
 
-//       {/* Gradient Overlays */}
 //       <div className="absolute top-0 left-0 w-full h-full z-30 pointer-events-none">
 //         <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent" />
 //         <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/60 to-transparent" />

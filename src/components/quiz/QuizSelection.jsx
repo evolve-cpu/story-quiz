@@ -962,6 +962,52 @@ const QuizSelection = () => {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 max-w-sm sm:max-w-7xl w-full px-2">
+          {/* ✅ SEEN / UNSEEN */}
+          <div
+            ref={(el) => (cardsRef.current[1] = el)}
+            className="relative bg-evolve-lavender-indigo bg-courses-grid p-4 sm:p-8 rounded-xl sm:rounded-2xl overflow-hidden"
+          >
+            <SafeImage
+              src={thunder_2}
+              alt="thunder1"
+              className="absolute block bottom-4 right-8 w-14 sm:bottom-4 sm:right-10 sm:w-20 opacity-70 z-0 pointer-events-none"
+            />
+            <SafeImage
+              src={thunder_1}
+              alt="thunder2"
+              className="absolute block sm:top-4 sm:left-8 top-10 left-4 w-14 sm:w-20 opacity-70 z-0 pointer-events-none"
+            />
+            <SafeImage
+              src={eye}
+              alt="eye"
+              className="absolute block sm:top-1/2 sm:-right-6 sm:-translate-y-1/2 top-[30%] right-1 w-14 sm:w-28 opacity-90 z-0 pointer-events-none"
+            />
+            <SafeImage
+              src={search}
+              alt="search"
+              className="absolute block bottom-6 left-10 w-16 sm:w-36 opacity-90 z-0 pointer-events-none"
+            />
+
+            <div className="relative z-10">
+              <h2 className="text-[36px] sm:text-[90px] font-extrabold text-white text-center leading-[80%] mb-3 sm:mb-6">
+                seen/
+                <br />
+                unseen
+              </h2>
+              <p className="text-[14px] sm:text-[32px] text-white text-center mb-3 sm:mb-[10rem]">
+                discover the logic behind <br /> the ordinary
+              </p>
+              <div className="w-fit mx-auto bg-white rounded-md transition-all duration-300 active:scale-90 sm:-mt-24 sm:transform sm:-translate-y-8">
+                <button
+                  className="flex items-center gap-2 sm:gap-3 font-bold tracking-tight bg-evolve-black text-white rounded-md transition-all duration-300 hover:bg-[#1a1a1a] text-sm px-4 py-2 sm:text-2xl sm:px-10 sm:py-3"
+                  onClick={handleStoryQuiz}
+                >
+                  play{" "}
+                  <ArrowRight className="w-3 h-3 sm:w-6 sm:h-6 text-white" />
+                </button>
+              </div>
+            </div>
+          </div>
           {/* ✅ PRINT IT RIGHT! */}
           <div
             ref={(el) => (cardsRef.current[0] = el)}
@@ -1002,53 +1048,6 @@ const QuizSelection = () => {
                 <button
                   className="flex items-center gap-2 sm:gap-3 font-bold tracking-tight bg-evolve-black text-white rounded-md transition-all duration-300 hover:bg-[#1a1a1a] text-sm px-4 py-2 sm:text-2xl sm:px-10 sm:py-3"
                   onClick={handleExternalQuiz}
-                >
-                  play{" "}
-                  <ArrowRight className="w-3 h-3 sm:w-6 sm:h-6 text-white" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ✅ SEEN / UNSEEN */}
-          <div
-            ref={(el) => (cardsRef.current[1] = el)}
-            className="relative bg-evolve-lavender-indigo bg-courses-grid p-4 sm:p-8 rounded-xl sm:rounded-2xl overflow-hidden"
-          >
-            <SafeImage
-              src={thunder_2}
-              alt="thunder1"
-              className="absolute block bottom-4 right-8 w-14 sm:bottom-4 sm:right-10 sm:w-20 opacity-70 z-0 pointer-events-none"
-            />
-            <SafeImage
-              src={thunder_1}
-              alt="thunder2"
-              className="absolute block sm:top-4 sm:left-8 top-10 left-4 w-14 sm:w-20 opacity-70 z-0 pointer-events-none"
-            />
-            <SafeImage
-              src={eye}
-              alt="eye"
-              className="absolute block sm:top-1/2 sm:-right-6 sm:-translate-y-1/2 top-[30%] right-1 w-14 sm:w-28 opacity-90 z-0 pointer-events-none"
-            />
-            <SafeImage
-              src={search}
-              alt="search"
-              className="absolute block bottom-6 left-10 w-16 sm:w-36 opacity-90 z-0 pointer-events-none"
-            />
-
-            <div className="relative z-10">
-              <h2 className="text-[36px] sm:text-[90px] font-extrabold text-white text-center leading-[80%] mb-3 sm:mb-6">
-                seen/
-                <br />
-                unseen
-              </h2>
-              <p className="text-[14px] sm:text-[32px] text-white text-center mb-3 sm:mb-[10rem]">
-                discover the logic behind <br /> the ordinary
-              </p>
-              <div className="w-fit mx-auto bg-white rounded-md transition-all duration-300 active:scale-90 sm:-mt-24 sm:transform sm:-translate-y-8">
-                <button
-                  className="flex items-center gap-2 sm:gap-3 font-bold tracking-tight bg-evolve-black text-white rounded-md transition-all duration-300 hover:bg-[#1a1a1a] text-sm px-4 py-2 sm:text-2xl sm:px-10 sm:py-3"
-                  onClick={handleStoryQuiz}
                 >
                   play{" "}
                   <ArrowRight className="w-3 h-3 sm:w-6 sm:h-6 text-white" />

@@ -971,23 +971,23 @@ const QuizSelection = () => {
             <SafeImage
               src={thunder_2}
               alt="thunder1"
-              className="absolute block top-[35%] left-14 -translate-y-1/2 w-24 sm:w-20 opacity-90 z-0 pointer-events-none"
+              className="absolute block top-10 left-6 -translate-y-1/2 w-14 sm:top-[35%] sm:w-20 opacity-90 z-0 pointer-events-none"
             />
             <SafeImage
               src={thunder_1}
               alt="thunder2"
-              className="absolute block top-[10%] right-14 w-28 sm:w-20 opacity-90 z-0 pointer-events-none"
+              className="absolute block top-10 right-3 sm:right-10 w-14 sm:top-[10%] sm:w-20 opacity-90 z-0 pointer-events-none"
             />
             <SafeImage
               src={mystery_box}
               alt="mystery"
-              className="absolute block bottom-4 right-4 w-24 sm:w-32 opacity-100 z-0 pointer-events-none"
+              className="absolute block bottom-4 right-4 w-14 sm:w-32 opacity-100 z-0 pointer-events-none"
             />
 
             <SafeImage
               src={objects}
               alt="objects"
-              className="absolute block bottom-20 left-8 w-20 sm:w-28 opacity-90 z-0 pointer-events-none"
+              className="absolute block bottom-10 left-8 w-14 sm:bottom-20 sm:left-8 sm:w-28 opacity-90 z-0 pointer-events-none"
             />
 
             <div className="relative z-10">
@@ -1018,17 +1018,17 @@ const QuizSelection = () => {
             <SafeImage
               src={thunder_2}
               alt="thunder1"
-              className="absolute block bottom-4 right-10 w-20 sm:w-20 opacity-70 z-0 pointer-events-none"
+              className="absolute block bottom-4 right-8 w-14 sm:bottom-4 sm:right-10 sm:w-20 opacity-70 z-0 pointer-events-none"
             />
             <SafeImage
               src={thunder_1}
               alt="thunder2"
-              className="absolute block top-4 left-8 w-24 sm:w-20 opacity-70 z-0 pointer-events-none"
+              className="absolute block sm:top-4 sm:left-8 top-10 left-4 w-14 sm:w-20 opacity-70 z-0 pointer-events-none"
             />
             <SafeImage
               src={eye}
               alt="eye"
-              className="absolute block top-1/2 -right-6 -translate-y-1/2 w-20 sm:w-28 opacity-90 z-0 pointer-events-none"
+              className="absolute block sm:top-1/2 sm:-right-6 sm:-translate-y-1/2 top-[30%] right-1 w-14 sm:w-28 opacity-90 z-0 pointer-events-none"
             />
             <SafeImage
               src={search}
